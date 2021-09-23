@@ -62,19 +62,21 @@ public class Test {
         }
         int times = 0;
         for (String i : words) {
-            // initialize stack for each line of words
-            Stack word = new Stack();
+            // initialize stack and queue for each line of words
+            Stack sword = new Stack();
+            Queue qword = new Queue();
             // make all letters lowercase
             i = i.toLowerCase();
             // remove all spaces
             i = i.replaceAll(" ", "");
             //initialize original word
             String original_word = "";
-            // push every character into the stack as strings
+            // push every character into the stack and enqueue into a queue as strings
             for(int j = 0; j < i.length(); j++){
                 char k = i.charAt(j);
                 String string_char = Character.toString(k);
-                word.push(string_char);
+                sword.push(string_char);
+
                 // keep track of original word to compare to reversed word
                 original_word += string_char;
             }
@@ -82,7 +84,7 @@ public class Test {
             String reversed_word = "";
             // pop every element in the stack to get the reversed word
             for(int k = 0; k < i.length(); k++){
-                reversed_word += word.pop();
+                reversed_word += sword.pop();
             }
             // see if reversed word is equal to original word (i.e. a palindrome)
             if (reversed_word.equals(original_word)){
