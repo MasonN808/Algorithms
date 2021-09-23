@@ -1,6 +1,7 @@
 public class Stack {
     Node top;
-    String setVal;
+    // set private to avoid being accessed outside of class
+    private String setVal;
 
     public boolean isEmpty(){
         return(top == null);

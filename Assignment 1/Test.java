@@ -42,7 +42,7 @@ public class Test {
         queued_people.show();
         System.out.println();
 
-
+        // Read line by line the txt file using File reader
         String fileName = "Assignment 1/Test_Cases";
         File file = new File(fileName);
         try {
@@ -69,8 +69,6 @@ public class Test {
             i = i.toLowerCase();
             // remove all spaces
             i = i.replaceAll(" ", "");
-            //initialize original word
-//            String original_word = "";
             // push every character into the stack and enqueue into a queue as strings
             for(int j = 0; j < i.length(); j++){
                 //get every character from every line
