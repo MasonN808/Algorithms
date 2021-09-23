@@ -1,7 +1,5 @@
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Locale;
 
 public class Test {
 
@@ -68,6 +66,8 @@ public class Test {
             Stack word = new Stack();
             // make all letters lowercase
             i = i.toLowerCase();
+            // remove all spaces
+            i = i.replaceAll(" ", "");
             //initialize original word
             String original_word = "";
             // push every character into the stack as strings
