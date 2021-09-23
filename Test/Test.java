@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class Test {
 
@@ -61,16 +62,36 @@ public class Test {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        int times = 0;
         for (String i : words) {
             // initialize stack for each line of words
             Stack word = new Stack();
+            // make all letters lowercase
+            i = i.toLowerCase();
+            //initialize original word
+            String original_word = "";
             // push every character into the stack as strings
             for(int j = 0; j < i.length(); j++){
                 char k = i.charAt(j);
                 String string_char = Character.toString(k);
                 word.push(string_char);
+                // keep track of original word to compare to reversed word
+                original_word += string_char;
+            }
+            // initialize reversed word
+            String reversed_word = "";
+            // pop every element in the stack to get the reversed word
+            for(int k = 0; k < i.length(); k++){
+                reversed_word += word.pop();
+            }
+            // see if reversed word is equal to original word (i.e. a palindrome)
+            if (reversed_word.equals(original_word)){
+                // print word if palindrome
+                System.out.println(original_word);
+                times += 1;
             }
         }
+        System.out.println("Number of Palindromes: " + times);
     }
 }
 
