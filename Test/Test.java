@@ -15,9 +15,12 @@ public class Test{
         person2.next = person3;
         Node person4 = new Node();
         person4.name = "Aristotle";
+        person4.next = null;
+        person3.next = person4;
         List people = new List();
         people.head = person1;
         System.out.println(people);
+        people.show();
     }
 }
 
