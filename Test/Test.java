@@ -70,26 +70,28 @@ public class Test {
             // remove all spaces
             i = i.replaceAll(" ", "");
             //initialize original word
-            String original_word = "";
+//            String original_word = "";
             // push every character into the stack and enqueue into a queue as strings
             for(int j = 0; j < i.length(); j++){
+                //get every character from every line
                 char k = i.charAt(j);
+                // convert characters to strings
                 String string_char = Character.toString(k);
                 sword.push(string_char);
-
-                // keep track of original word to compare to reversed word
-                original_word += string_char;
+                qword.enqueue(string_char);
             }
-            // initialize reversed word
-            String reversed_word = "";
-            // pop every element in the stack to get the reversed word
+            // initialize reversed words as empty strings
+            String reversed_word_stack = "";
+            String word_queue = "";
+            // pop every element in the stack to get the reversed word and dequeue in the queue
             for(int k = 0; k < i.length(); k++){
-                reversed_word += sword.pop();
+                word_queue += qword.dequeue();
+                reversed_word_stack += sword.pop();
             }
-            // see if reversed word is equal to original word (i.e. a palindrome)
-            if (reversed_word.equals(original_word)){
+            // see if reversed word is equal to dequeued word(i.e. a palindrome)
+            if (reversed_word_stack.equals(word_queue)){
                 // print word if palindrome
-                System.out.println(original_word);
+                System.out.println(reversed_word_stack);
                 times += 1;
             }
         }
