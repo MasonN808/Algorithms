@@ -2,9 +2,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Test{
+public class Test {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         String[] words = {};
         // Testing for List class and Node class
         Node person1 = new Node();
@@ -12,11 +12,11 @@ public class Test{
         person1.next = null;
         Node person2 = new Node();
         person2.name = "Paul Erdos";
-        person2.next =  null;
+        person2.next = null;
         person1.next = person2;
         Node person3 = new Node();
         person3.name = "Carl Gauss";
-        person3.next =  null;
+        person3.next = null;
         person2.next = person3;
         Node person4 = new Node();
         person4.name = "Aristotle";
@@ -55,15 +55,21 @@ public class Test{
                 words = Arrays.copyOf(words, words.length + 1); //extends memory
                 words[words.length - 1] = line; //adds word to extra memory
             }
-        }catch(FileNotFoundException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // Testing to see if strings were added to array
-        for(String i: words) {
-            System.out.println(i);
+        for (String i : words) {
+            // initialize stack for each line of words
+            Stack word = new Stack();
+            // push every character into the stack as strings
+            for(int j = 0; j < i.length(); j++){
+                char k = i.charAt(j);
+                String string_char = Character.toString(k);
+                word.push(string_char);
+            }
         }
     }
 }
