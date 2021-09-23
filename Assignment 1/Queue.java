@@ -1,13 +1,11 @@
 public class Queue {
     Node head, tail;
-    String dequeue;
-    boolean isEmpty;
 
     public boolean isEmpty(){
         return(head == null);
     }
 
-    public void enqeueu(String s){
+    public void enqueue(String s){
         Node oldTail = tail;
         tail = new Node();
         tail.name = s;
@@ -31,6 +29,17 @@ public class Queue {
             retval = "";
         }
         return retval;
+    }
+
+    public void show(){
+        while(!isEmpty()){
+            if(head.next == null){
+                System.out.print(head.name);
+            }else {
+                System.out.print(head.name + " | ");
+            }
+            head = head.next;
+        }
     }
 
 }

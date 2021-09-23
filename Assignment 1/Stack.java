@@ -31,4 +31,15 @@ public class Stack {
         }
         return setVal;
     }
+
+    public void show(){
+        while(!isEmpty()){
+            if(top.next == null){
+                System.out.print(top.name);
+            }else {
+                System.out.print(top.name + " | ");
+            }
+            top = top.next;
+        }
+    }
 }

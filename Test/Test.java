@@ -1,6 +1,11 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Test{
+
     public static void main(String[] args){
+        String[] words = {};
         // Testing for List class and Node class
         Node person1 = new Node();
         person1.name = "Jhon Von Neumann";
@@ -17,10 +22,49 @@ public class Test{
         person4.name = "Aristotle";
         person4.next = null;
         person3.next = person4;
+
         List people = new List();
         people.head = person1;
-        System.out.println(people);
+        System.out.println("List:");
         people.show();
+        System.out.println();
+
+        Stack stacked_people = new Stack();
+        stacked_people.top = person1;
+        System.out.println("Stack:");
+        stacked_people.show();
+        System.out.println();
+
+
+        Queue queued_people = new Queue();
+        queued_people.head = person1;
+        queued_people.tail = person4;
+        System.out.println("Queue:");
+        queued_people.show();
+        System.out.println();
+
+
+        String fileName = "Assignment 1/Test_Cases";
+        File file = new File(fileName);
+        try {
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            while ((line = br.readLine()) != null) {
+                // add strings from txt file line by line into array words
+                words = Arrays.copyOf(words, words.length + 1); //extends memory
+                words[words.length - 1] = line; //adds word to extra memory
+            }
+        }catch(FileNotFoundException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // Testing to see if strings were added to array
+        for(String i: words) {
+            System.out.println(i);
+        }
     }
 }
 
