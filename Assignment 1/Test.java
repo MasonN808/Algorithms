@@ -43,7 +43,7 @@ public class Test {
         System.out.println();
 
         // Read line by line the txt file using File reader
-        String fileName = "Assignment 1/Test_Cases";
+        String fileName = "Assignment 1/magicitems";
         File file = new File(fileName);
         try {
             FileReader fr = new FileReader(file);
