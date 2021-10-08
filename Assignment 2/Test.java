@@ -1,3 +1,4 @@
+import javax.swing.plaf.synth.SynthUI;
 import java.io.*;
 import java.util.Arrays;
 
@@ -23,9 +24,34 @@ public class Test {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        int times = 0;
-        for (String i : words) {
-
+        // Start of testing for sorting
+        // Testing of selection sort algorithm
+        String[] copy_words0 = words.clone();
+        SelectionSort s_sort = new SelectionSort();
+        for (String i : s_sort.selectionSort(copy_words0)) {
+//            System.out.println(i);
         }
+        System.out.println("Number of Comparisons for Selection Sort: " + s_sort.comparisons);
+
+        // Testing of insertion sort algorithm
+        String[] copy_words1 = words.clone();
+        InserstionSort i_sort = new InserstionSort();
+        for (String i : i_sort.insertionSort(copy_words1)) {
+//            System.out.println(i);
+        }
+        System.out.println("Number of Comparisons for Insertion Sort: " + i_sort.comparisons);
+
+        // Testing of insertion sort algorithm
+        String[] copy_words2 = words.clone();
+        InserstionSort m_sort = new InserstionSort();
+        for (String i : i_sort.insertionSort(copy_words1)) {
+//            System.out.println(i);
+        }
+        System.out.println("Number of Comparisons for Insertion Sort: " + i_sort.comparisons);
+
+
+//        for (String i : (words)) {
+//            System.out.println(i);
+//        }
     }
 }
