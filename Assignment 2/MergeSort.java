@@ -49,18 +49,19 @@ public class MergeSort {
 
         int i = 0, j = 0, k = 0;
         while (i < l && j < r) {
-            if (L[i].compareTo(R[j]) > 0) {
+            comparisons +=1;
+            if (L[i].compareTo(R[j]) < 0) {
                 A[k++] = L[i++];
-                comparisons += 1;
-            }
-            else {
+            }else {
                 A[k++] = R[j++];
             }
         }
         while (i < l) {
+            comparisons +=1;
             A[k++] = L[i++];
         }
         while (j < r) {
+            comparisons +=1;
             A[k++] = R[j++];
         }
     }
@@ -73,9 +74,11 @@ public class MergeSort {
         String[] R = new String[end - mid];
 
         for (int i = 0; i < mid; i++) {
+            comparisons += 1;
             L[i] = A[i];
         }
         for (int i = mid; i < end; i++) {
+            comparisons += 1;
             R[i - mid] = A[i];
         }
         mergeSort(L, mid);
