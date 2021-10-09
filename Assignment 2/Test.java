@@ -7,7 +7,7 @@ public class Test {
     public static void main(String[] args) {
         String[] words = {};
         // Read line by line the txt file using File reader
-        String fileName = "Assignment 1/magicitems";
+        String fileName = "Assignment 2/magicitems";
         File file = new File(fileName);
         try {
             FileReader fr = new FileReader(file);
