@@ -26,29 +26,48 @@ public class Test {
         }
         // Start of testing for sorting
         // Testing of selection sort algorithm
+        Shuffle shuffler = new Shuffle();
         String[] copy_words0 = words.clone();
+        //shuffle the words
+        copy_words0 = shuffler.shuffle(copy_words0);
         SelectionSort s_sort = new SelectionSort();
-        for (String i : s_sort.selectionSort(copy_words0)) {
-//            System.out.println(i);
-        }
+        s_sort.selectionSort(copy_words0);
+//        for (String i : ) {
+////            System.out.println(i);
+//        }
         System.out.println("Number of Comparisons for Selection Sort: " + s_sort.comparisons);
 
         // Testing of insertion sort algorithm
         String[] copy_words1 = words.clone();
+        //shuffle the words
+        copy_words1 = shuffler.shuffle(copy_words1);
         InserstionSort i_sort = new InserstionSort();
         for (String i : i_sort.insertionSort(copy_words1)) {
 //            System.out.println(i);
         }
         System.out.println("Number of Comparisons for Insertion Sort: " + i_sort.comparisons);
 
-        // Testing of insertion sort algorithm
+        // Testing of merge sort algorithm
         String[] copy_words2 = words.clone();
-        InserstionSort m_sort = new InserstionSort();
-        for (String i : i_sort.insertionSort(copy_words1)) {
-//            System.out.println(i);
-        }
-        System.out.println("Number of Comparisons for Insertion Sort: " + i_sort.comparisons);
+        //shuffle the words
+        copy_words2 = shuffler.shuffle(copy_words2);
+        MergeSort m_sort = new MergeSort();
+        m_sort.mergeSort(copy_words2, copy_words2.length);
+//        for (String i : m_sort.mergeSort(copy_words1)) {
+////            System.out.println(i);
+//        }
+        System.out.println("Number of Comparisons for Merge Sort: " + m_sort.comparisons);
 
+        // Testing of quick sort algorithm
+        String[] copy_words3 = words.clone();
+        //shuffle the words
+        copy_words3 = shuffler.shuffle(copy_words3);
+        QuickSort q_sort = new QuickSort();
+        q_sort.quickSort(copy_words2, 1, copy_words2.length);
+        for (String i : copy_words2) {
+            System.out.println(i);
+        }
+        System.out.println("Number of Comparisons for Merge Sort: " + q_sort.comparisons);
 
 //        for (String i : (words)) {
 //            System.out.println(i);
