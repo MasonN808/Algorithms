@@ -23,7 +23,13 @@ public class Test {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // Start of testing for sorting
+        String[] copy_words0 = words.clone();
+        //Sort the words
+        InserstionSort i_sort = new InserstionSort();
+        i_sort.insertionSort(copy_words0);
+//        for (String i: copy_words0){
+//            System.out.println(i);
+//        }
 
     }
 }
