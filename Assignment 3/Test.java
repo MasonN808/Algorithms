@@ -55,5 +55,8 @@ public class Test {
             total_comparisons += linear.comparisons;
         }
         System.out.println("Average number of Comparisons:" + total_comparisons/42);
+
+        //getting comparisons for binary search
+
     }
 }
