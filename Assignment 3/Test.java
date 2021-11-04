@@ -47,16 +47,25 @@ public class Test {
 //            System.out.println(i);
 //        }
         // getting comparisons for linear search
-        int total_comparisons = 0;
+        int total_comparisons_linear = 0;
         for(String i: random_words){
             Linear linear = new Linear();
+            // search for target i
             linear.linear_search(sorted_words0, i);
             System.out.println(linear.comparisons);
-            total_comparisons += linear.comparisons;
+            total_comparisons_linear += linear.comparisons;
         }
-        System.out.println("Average number of Comparisons:" + total_comparisons/42);
+        System.out.println("Average number of Comparisons for Linear Search:" + total_comparisons_linear/42);
 
         //getting comparisons for binary search
-
+        int total_comparisons_binary = 0;
+        for(String i: random_words){
+            Binary binary = new Binary();
+            // start recursion with entire sorted_words0 array of Strings
+            binary.binary_search(sorted_words0, 0, sorted_words0.length-1, i);
+            System.out.println(binary.comparisons);
+            total_comparisons_binary += binary.comparisons;
+        }
+        System.out.println("Average number of Comparisons for Binary Search:" + total_comparisons_binary/42);
     }
 }

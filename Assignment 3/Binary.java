@@ -2,6 +2,7 @@ public class Binary {
     int comparisons = 0;
     public int binary_search(String[] A, int left, int right, String target){
         if (left <= right){
+            comparisons += 1;
             // get the middle string between right and left points in A
             int middle = left + (right - left)/2;
             if (A[middle] == target){
