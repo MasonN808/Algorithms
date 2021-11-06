@@ -116,7 +116,7 @@ public class Hashing {
                     break;
                 }
 //                if(targets_hashValues[i] == (head.hashValue)){
-//                    output = "Target Found2";
+////                    output = "Target Found2";
 //                    System.out.println(targets[i]);
 //                    break;
 //                }
