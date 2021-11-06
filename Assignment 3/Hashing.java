@@ -54,9 +54,12 @@ public class Hashing {
         }
     }
 
-    public int populate_retrieveTargets(int[] targets_hashValues, int[] hashValues){
+    public void populate_retrieveTargets(int[] targets_hashValues, String[] targets, int[] hashValues, String[] hashOriginalStrings){
         // 1) Populate the Hash table first
-        Arrays.sort(hashValues);
+        // sort hashValues, then sort hashOriginalStrings the SAME way (RELATIVE SORTING)
+        RelativeInsertionSort relativeInsertionSort = new RelativeInsertionSort();
+        relativeInsertionSort.relative_insertionSort(hashValues, hashOriginalStrings);
+//        Arrays.sort(hashValues);
         //convert hashValues to an array of linked lists (hashValues ---> hashValues_asNodes)
         Node[] hashValues_asNodes = new Node[LINES_IN_FILE];
         for (int i = 0; i < LINES_IN_FILE; i++){
@@ -64,26 +67,38 @@ public class Hashing {
             node.index = i;
             node.next = null;
             node.hashValue = -1;
+            node.name = null;
             hashValues_asNodes[i] = node;
         }
         int arrayIndex = 0;
         for (int i=0; i < HASH_TABLE_SIZE; i++) {
             System.out.format("%03d ", i);
             // This will terminate
+            // go through each index and append a pointer to a node if such a hashValue exists
             while ( (arrayIndex < LINES_IN_FILE) && (hashValues_asNodes[arrayIndex].index == i) ) {
                 Node node = new Node();
                 node.next = null;
                 node.hashValue = hashValues[arrayIndex];
+                node.name = hashOriginalStrings[arrayIndex];
                 hashValues_asNodes[arrayIndex].next = node;
-                arrayIndex = arrayIndex + 1;
+                arrayIndex += 1;
             }
         }
+//        System.out.println("passed point A");
         // 2) Retrieve target values
-        for(int i: targets_hashValues){
-            while()
+        for(int i = 0; i < targets.length; i++){
+            String output = "Target not in hashtable";
+            // search the linked list at index=target_hashValue
+            while(hashValues_asNodes[targets_hashValues[i]].next != null){
+                // compare here
+                comparisons += 1;
+                if(targets[i].equals(hashValues_asNodes[targets_hashValues[i]].name)){
+                    output = "Target Found";
+                }
+                hashValues_asNodes[targets_hashValues[i]].next = hashValues_asNodes[targets_hashValues[i]].next;
+            }
+            System.out.println(output);
         }
-
-        return 1;
     }
 
 

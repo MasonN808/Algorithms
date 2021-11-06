@@ -43,9 +43,9 @@ public class Test {
             random_words[random_words.length-1] = sorted_words0[randomIndex];
         }
         // test the 42 random words from sorted_words0
-//        for(String i: random_words){
-//            System.out.println(i);
-//        }
+        for(String i: random_words){
+            System.out.println(i);
+        }
         // getting comparisons for linear search
         float total_comparisons_linear = 0;
         for(String i: random_words){
@@ -74,22 +74,34 @@ public class Test {
         int[] hashValues = new int[hashing.LINES_IN_FILE];
         int hashCode = 0;
         for (int i = 0; i < hashing.LINES_IN_FILE; i++) {
-            System.out.print(i);
-            System.out.print(". " + copy_words0[i] + " - ");
+//            System.out.print(i);
+//            System.out.print(". " + copy_words0[i] + " - ");
             hashCode = hashing.doHashCode(copy_words0[i]);
-            System.out.format("%03d%n", hashCode);
+//            System.out.format("%03d%n", hashCode);
             hashValues[i] = hashCode;
         }
         // get the hash values for target values
         int[] target_hashValues = new int[random_words.length];
         for (int i = 0; i < random_words.length; i++) {
             // Get the hash code for the target String
-            System.out.print(i);
-            System.out.print(". " + random_words[i] + " - ");
+//            System.out.print(i);
+//            System.out.print(". " + random_words[i] + " - ");
             hashCode = hashing.doHashCode(random_words[i]);
-            System.out.format("%03d%n", hashCode);
+//            System.out.format("%03d%n", hashCode);
             hashValues[i] = hashCode;
         }
+        //Testing for relative sorting in Hashing Class
+//        RelativeInsertionSort relativeInsertionSort = new RelativeInsertionSort();
+//        relativeInsertionSort.relative_insertionSort(hashValues, copy_words0);
+//        for (int i: hashValues){
+//            System.out.println(i);
+//        }
+//        for (String j: copy_words0){
+//            System.out.println(j);
+//        }
+
+        hashing.populate_retrieveTargets(target_hashValues, random_words, hashValues, copy_words0);
+        System.out.println(hashing.comparisons);
 
         // Analyze the distribution of hash values.
 //        hashing.analyzeHashValues(hashValues);
