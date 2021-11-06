@@ -52,7 +52,7 @@ public class Test {
             Linear linear = new Linear();
             // search for target i
             linear.linear_search(sorted_words0, i);
-            System.out.println(linear.comparisons);
+//            System.out.println(linear.comparisons);
             total_comparisons_linear += linear.comparisons;
         }
         System.out.println("Average number of Comparisons for Linear Search:" + total_comparisons_linear/42);
@@ -63,7 +63,7 @@ public class Test {
             Binary binary = new Binary();
             // start recursion with entire sorted_words0 array of Strings
             binary.binary_search(sorted_words0, 0, sorted_words0.length-1, i);
-            System.out.println(binary.comparisons);
+//            System.out.println(binary.comparisons);
             total_comparisons_binary += binary.comparisons;
         }
         System.out.println("Average number of Comparisons for Binary Search:" + total_comparisons_binary/42);

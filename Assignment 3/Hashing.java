@@ -63,16 +63,18 @@ public class Hashing {
         //convert hashValues to an array of linked lists (hashValues ---> hashValues_asNodes)
         Node[] hashValues_asNodes = new Node[LINES_IN_FILE];
         for (int i = 0; i < LINES_IN_FILE; i++){
+//            List list = new List();
             Node node = new Node();
             node.index = i;
             node.next = null;
             node.hashValue = -1;
             node.name = null;
+//            list.head = node;
             hashValues_asNodes[i] = node;
         }
         int arrayIndex = 0;
         for (int i=0; i < HASH_TABLE_SIZE; i++) {
-            System.out.format("%03d ", i);
+//            System.out.format("%03d ", i);
             // This will terminate
             // go through each index and append a pointer to a node if such a hashValue exists
             while ( (arrayIndex < LINES_IN_FILE) && (hashValues_asNodes[arrayIndex].index == i) ) {
@@ -91,11 +93,18 @@ public class Hashing {
             // search the linked list at index=target_hashValue
             while(hashValues_asNodes[targets_hashValues[i]].next != null){
                 // compare here
+                System.out.println(targets[i]);
+                Node head = hashValues_asNodes[targets_hashValues[i]].next;
                 comparisons += 1;
-                if(targets[i].equals(hashValues_asNodes[targets_hashValues[i]].name)){
+                // compare target string to all node.names in the linked list
+                if(targets[i].equals(head.name)){
                     output = "Target Found";
                 }
-                hashValues_asNodes[targets_hashValues[i]].next = hashValues_asNodes[targets_hashValues[i]].next;
+                if(targets_hashValues[i] == (head.hashValue)){
+                    output = "Target Found";
+                    break;
+                }
+//                hashValues_asNodes[targets_hashValues[i]].next = head.next;
             }
             System.out.println(output);
         }
