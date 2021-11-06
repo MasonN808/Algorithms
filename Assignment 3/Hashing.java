@@ -67,9 +67,11 @@ public class Hashing {
             Node node = new Node();
             node.index = i;
             node.next = null;
-            node.hashValue = -1;
+            node.hashValue = hashValues[i];
             node.name = null;
 //            list.head = node;
+//            list.head = node;
+            // linear: 0,1,2,3,4,...,665
             hashValues_asNodes[i] = node;
         }
         int arrayIndex = 0;
@@ -77,40 +79,51 @@ public class Hashing {
 //            System.out.format("%03d ", i);
             // This will terminate
             // go through each index and append a pointer to a node if such a hashValue exists
-            while ( (arrayIndex < LINES_IN_FILE) && (hashValues_asNodes[arrayIndex].index == i) ) {
+            int asteriskCount = 0;
+            while ( (arrayIndex < LINES_IN_FILE) && (hashValues_asNodes[arrayIndex].hashValue == i) ) {
+//                System.out.print("*");
+//                asteriskCount = asteriskCount + 1;
                 Node node = new Node();
                 node.next = null;
                 node.hashValue = hashValues[arrayIndex];
+                //node.name --> String
                 node.name = hashOriginalStrings[arrayIndex];
-                hashValues_asNodes[arrayIndex].next = node;
+                hashValues_asNodes[i].next = node;
                 arrayIndex += 1;
             }
+//            System.out.print(" ");
+//            System.out.println(asteriskCount);
         }
 //        System.out.println("passed point A");
         // 2) Retrieve target values
         for(int i = 0; i < targets.length; i++){
-            String output = "Target not in hashtable";
+//            String output = "Target not in hashtable";
             // search the linked list at index=target_hashValue
-            while(hashValues_asNodes[targets_hashValues[i]].next != null){
+//            if (hashValues_asNodes[targets_hashValues[i]].index == targets_hashValues[i])
+//                System.out.println("testing");
+//            System.out.println(hashValues_asNodes[targets_hashValues[i]].index);
+            Node head = hashValues_asNodes[targets_hashValues[i]].next;
+            int output = 0;
+            while(head != null){
                 // compare here
 //                System.out.println(targets[i]);
-                Node head = hashValues_asNodes[targets_hashValues[i]].next;
                 comparisons += 1;
                 // compare target string to all node.names in the linked list
                 //NO clue why this does not work, but next if statement does
-//                if(targets[i].compareTo(head.name) == 0){
-//                    output = "Target Found1";
-//                    System.out.println(targets[i]);
-//                    break;
-//                }
-                if(targets_hashValues[i] == (head.hashValue)){
-                    output = "Target Found2";
+                if(targets[i].equals(head.name)){
+//                    output += 1;
                     System.out.println(targets[i]);
                     break;
                 }
-//                hashValues_asNodes[targets_hashValues[i]].next = head.next;
+//                if(targets_hashValues[i] == (head.hashValue)){
+//                    output = "Target Found2";
+//                    System.out.println(targets[i]);
+//                    break;
+//                }
+//                System.out.println(head.name);
+                head = head.next;
             }
-            System.out.println(output);
+//            System.out.println(output);
         }
     }
 
