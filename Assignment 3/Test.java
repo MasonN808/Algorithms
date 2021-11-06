@@ -75,19 +75,23 @@ public class Test {
         int hashCode = 0;
         for (int i = 0; i < hashing.LINES_IN_FILE; i++) {
             System.out.print(i);
+            System.out.print(". " + copy_words0[i] + " - ");
+            hashCode = hashing.doHashCode(copy_words0[i]);
+            System.out.format("%03d%n", hashCode);
+            hashValues[i] = hashCode;
+        }
+        // get the hash values for target values
+        int[] target_hashValues = new int[random_words.length];
+        for (int i = 0; i < random_words.length; i++) {
+            // Get the hash code for the target String
+            System.out.print(i);
             System.out.print(". " + random_words[i] + " - ");
             hashCode = hashing.doHashCode(random_words[i]);
             System.out.format("%03d%n", hashCode);
             hashValues[i] = hashCode;
         }
-        // get the hash values for target values
-        for (String i: random_words) {
-            // Get the hash code for the target String
-            int hashcode = hashing.doHashCode(i);
-            // For each value in the array, see if
-        }
 
         // Analyze the distribution of hash values.
-        hashing.analyzeHashValues(hashValues);
+//        hashing.analyzeHashValues(hashValues);
     }
 }

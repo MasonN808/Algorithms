@@ -1,5 +1,6 @@
 public class Node {
-    String name;
+    int hashValue;
+    int index;
     Node next;
 }
 

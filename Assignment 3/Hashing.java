@@ -6,6 +6,8 @@ public class Hashing {
     public final String FILE_NAME = "Assignment 3/magicitems";
     public final int LINES_IN_FILE = 666;
     public final int HASH_TABLE_SIZE = 250;
+    int comparisons = 0;
+
 
 
     public int doHashCode(String str) {
@@ -37,10 +39,10 @@ public class Hashing {
         int totalCount = 0;
         int arrayIndex = 0;
 
-        for (int i=0; i < HASH_TABLE_SIZE; i++) {
+        for (int i = 0; i < HASH_TABLE_SIZE; i++) {
             System.out.format("%03d ", i);
             asteriskCount = 0;
-            while ( (arrayIndex < LINES_IN_FILE) && (hashValues[arrayIndex] == i) ) {
+            while ((arrayIndex < LINES_IN_FILE) && (hashValues[arrayIndex] == i)) {
                 System.out.print("*");
                 asteriskCount = asteriskCount + 1;
                 arrayIndex = arrayIndex + 1;
@@ -50,6 +52,39 @@ public class Hashing {
             bucketCount[i] = asteriskCount;
             totalCount = totalCount + asteriskCount;
         }
+    }
+
+    public int populate_retrieveTargets(int[] targets_hashValues, int[] hashValues){
+        // 1) Populate the Hash table first
+        Arrays.sort(hashValues);
+        //convert hashValues to an array of linked lists (hashValues ---> hashValues_asNodes)
+        Node[] hashValues_asNodes = new Node[LINES_IN_FILE];
+        for (int i = 0; i < LINES_IN_FILE; i++){
+            Node node = new Node();
+            node.index = i;
+            node.next = null;
+            node.hashValue = -1;
+            hashValues_asNodes[i] = node;
+        }
+        int arrayIndex = 0;
+        for (int i=0; i < HASH_TABLE_SIZE; i++) {
+            System.out.format("%03d ", i);
+            // This will terminate
+            while ( (arrayIndex < LINES_IN_FILE) && (hashValues_asNodes[arrayIndex].index == i) ) {
+                Node node = new Node();
+                node.next = null;
+                node.hashValue = hashValues[arrayIndex];
+                hashValues_asNodes[arrayIndex].next = node;
+                arrayIndex = arrayIndex + 1;
+            }
+        }
+        // 2) Retrieve target values
+        for(int i: targets_hashValues){
+            while()
+        }
+
+        return 1;
+    }
 
 
 //
@@ -77,26 +112,12 @@ public class Hashing {
 //        // ... and take the square root of that.
 //        double stdDev = Math.sqrt(temp);
 //        System.out.format("%.2f%n", stdDev);
-    }
+
 
 //    private static populateHashTable()
 
 
-    int comparisons = 0;
-    public int retrieveTargets(String[] targets_hashValues, int[] hashValues){
 
-        int arrayIndex = 0;
-
-        for (int i=0; i < HASH_TABLE_SIZE; i++) {
-            System.out.format("%03d ", i);
-            while ( (arrayIndex < LINES_IN_FILE) && (hashValues[arrayIndex] == i) ) {
-                Node node = new Node();
-
-                arrayIndex += 1;
-            }
-        }
-        return 1;
-    }
 
              /*
         Public
