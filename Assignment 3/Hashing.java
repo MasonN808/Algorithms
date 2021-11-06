@@ -93,95 +93,25 @@ public class Hashing {
             // search the linked list at index=target_hashValue
             while(hashValues_asNodes[targets_hashValues[i]].next != null){
                 // compare here
-                System.out.println(targets[i]);
+//                System.out.println(targets[i]);
                 Node head = hashValues_asNodes[targets_hashValues[i]].next;
                 comparisons += 1;
                 // compare target string to all node.names in the linked list
-                if(targets[i].equals(head.name)){
-                    output = "Target Found";
-                }
+                //NO clue why this does not work, but next if statement does
+//                if(targets[i].compareTo(head.name) == 0){
+//                    output = "Target Found1";
+//                    System.out.println(targets[i]);
+//                    break;
+//                }
                 if(targets_hashValues[i] == (head.hashValue)){
-                    output = "Target Found";
+                    output = "Target Found2";
+                    System.out.println(targets[i]);
                     break;
                 }
 //                hashValues_asNodes[targets_hashValues[i]].next = head.next;
             }
             System.out.println(output);
         }
-    }
-
-
-//
-//        System.out.print("Average load (count): ");
-//        float averageLoad = (float) totalCount / HASH_TABLE_SIZE;
-//        System.out.format("%.2f%n", averageLoad);
-//        System.out.print("Average load (calc) : ");
-//        averageLoad = (float) LINES_IN_FILE / HASH_TABLE_SIZE;
-//        System.out.format("%.2f%n", averageLoad);
-//
-//        System.out.print("Standard Deviation: ");
-//        // TODO: Refactor this into its own method.
-//        double sum = 0;
-//        for (int i=0; i < HASH_TABLE_SIZE; i++) {
-//            // For each value in the array...
-//            // ... subtract the mean from each one ...
-//            double result = bucketCount[i] - averageLoad;
-//            // ... and square the result.
-//            double square = result * result;
-//            // Sum all of those squares.
-//            sum = sum + square;
-//        }
-//        // Divide the sum by the number of values ...
-//        double temp = sum / HASH_TABLE_SIZE;
-//        // ... and take the square root of that.
-//        double stdDev = Math.sqrt(temp);
-//        System.out.format("%.2f%n", stdDev);
-
-
-//    private static populateHashTable()
-
-
-
-
-             /*
-        Public
-      */
-
-    public void main(String[] args) {
-        System.out.println("Hash code tests and analysis.");
-        System.out.println("-----------------------------");
-
-        String[] magicItems = new String[LINES_IN_FILE];
-        int[] hashValues = new int[LINES_IN_FILE];
-
-        // Read the contents of FILE_NAME into our array of size LINES_IN_FILE.
-        int index = 0;
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(FILE_NAME));
-            String line = "";
-            line = br.readLine();
-            while (line != null) {
-                magicItems[index] = line;
-                index = index + 1;
-                line = br.readLine();
-            }
-            br.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        // Print the array and hash values.
-        int hashCode = 0;
-        for (int i = 0; i < LINES_IN_FILE; i++) {
-            System.out.print(i);
-            System.out.print(". " + magicItems[i] + " - ");
-            hashCode = doHashCode(magicItems[i]);
-            System.out.format("%03d%n", hashCode);
-            hashValues[i] = hashCode;
-        }
-
-        // Analyze the distribution of hash values.
-        analyzeHashValues(hashValues);
     }
 
 }
