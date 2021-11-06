@@ -7,7 +7,7 @@ public class Test {
     public static void main(String[] args) {
         String[] words = {};
         // Read line by line the txt file using File reader
-        String fileName = "Assignment 2/magicitems";
+        String fileName = "Assignment 3/magicitems";
         File file = new File(fileName);
         try {
             FileReader fr = new FileReader(file);
@@ -47,7 +47,7 @@ public class Test {
 //            System.out.println(i);
 //        }
         // getting comparisons for linear search
-        int total_comparisons_linear = 0;
+        float total_comparisons_linear = 0;
         for(String i: random_words){
             Linear linear = new Linear();
             // search for target i
@@ -58,7 +58,7 @@ public class Test {
         System.out.println("Average number of Comparisons for Linear Search:" + total_comparisons_linear/42);
 
         //getting comparisons for binary search
-        int total_comparisons_binary = 0;
+        float total_comparisons_binary = 0;
         for(String i: random_words){
             Binary binary = new Binary();
             // start recursion with entire sorted_words0 array of Strings
@@ -67,5 +67,27 @@ public class Test {
             total_comparisons_binary += binary.comparisons;
         }
         System.out.println("Average number of Comparisons for Binary Search:" + total_comparisons_binary/42);
+
+        // Hash Testing
+        // Print the array and hash values.
+        Hashing hashing = new Hashing();
+        int[] hashValues = new int[hashing.LINES_IN_FILE];
+        int hashCode = 0;
+        for (int i = 0; i < hashing.LINES_IN_FILE; i++) {
+            System.out.print(i);
+            System.out.print(". " + random_words[i] + " - ");
+            hashCode = hashing.doHashCode(random_words[i]);
+            System.out.format("%03d%n", hashCode);
+            hashValues[i] = hashCode;
+        }
+        // get the hash values for target values
+        for (String i: random_words) {
+            // Get the hash code for the target String
+            int hashcode = hashing.doHashCode(i);
+            // For each value in the array, see if
+        }
+
+        // Analyze the distribution of hash values.
+        hashing.analyzeHashValues(hashValues);
     }
 }
