@@ -5,9 +5,9 @@ import java.util.Random;
 public class Test {
 
     public static void main(String[] args) {
-        String[] words = {};
+        String[] lines = {};
         // Read line by line the txt file using File reader
-        String fileName = "Assignment 3/magicitems";
+        String fileName = "Assignment 4/graphs1.txt";
         File file = new File(fileName);
         try {
             FileReader fr = new FileReader(file);
@@ -15,8 +15,8 @@ public class Test {
             String line;
             while ((line = br.readLine()) != null) {
                 // add strings from txt file line by line into array words
-                words = Arrays.copyOf(words, words.length + 1); //extends memory
-                words[words.length - 1] = line; //adds word to extra memory
+                lines = Arrays.copyOf(lines, lines.length + 1); //extends memory
+                lines[lines.length - 1] = line; //adds line to extra memory
             }
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
@@ -24,7 +24,12 @@ public class Test {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String[] copy_words0 = words.clone();
+
+        String[] copy_words0 = lines.clone();
+        for (String i: copy_words0){
+            System.out.println(i);
+        }
+
         //Sort the words using insertion sort
 
     }
