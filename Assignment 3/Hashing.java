@@ -3,7 +3,7 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 
 public class Hashing {
-    public final String FILE_NAME = "Assignment 3/magicitems";
+    public final String FILE_NAME = "magicitems";
     public final int LINES_IN_FILE = 666;
     public final int HASH_TABLE_SIZE = 250;
     int comparisons = 0;
@@ -85,7 +85,7 @@ public class Hashing {
 //                asteriskCount = asteriskCount + 1;
                 Node node = new Node();
                 node.next = null;
-                node.hashValue = hashValues[arrayIndex];
+                node.hashValue = i;
                 //node.name --> String
                 node.name = hashOriginalStrings[arrayIndex];
                 hashValues_asNodes[i].next = node;
@@ -113,7 +113,7 @@ public class Hashing {
                 if(targets[i].equals(head.name)){
 //                    output += 1;
                     System.out.println(targets[i]);
-                    break;
+//                    break;
                 }
 //                if(targets_hashValues[i] == (head.hashValue)){
 ////                    output = "Target Found2";
@@ -121,6 +121,7 @@ public class Hashing {
 //                    break;
 //                }
 //                System.out.println(head.name);
+                //go to next node in linked list
                 head = head.next;
             }
 //            System.out.println(output);
