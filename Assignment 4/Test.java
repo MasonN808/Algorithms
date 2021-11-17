@@ -30,6 +30,9 @@ public class Test {
             System.out.println(i);
         }
 
+        Outputs out = new Outputs();
+        out.adjacency_matrix(copy_words0);
+
         //Sort the words using insertion sort
 
     }
