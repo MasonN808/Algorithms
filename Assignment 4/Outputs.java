@@ -150,21 +150,25 @@ public class Outputs {
 
             }
 
-            // create instance of matrix given number of vertices declared
+            // create instance of array given number of vertices declared
             index_end = index_start + 1;
-            int[] array = new int[adj_list_length];
+            //make array of vertex objects
+            Vertex[] array = new Vertex[adj_list_length];
+            // check starting index
             if (indexIs0) {
-                for (int i = 0; i < adj_list_length; i++){
+                for (int i = 0; i < adj_list_length; i++) {
                     // from Vertex class
                     Vertex vertex = new Vertex();
                     vertex.label = i;
                     vertex.next = null;
+                    array[i] = vertex;
                 }
-            } else {// add 1
-                for (int i = 1; i < adj_list_length + 1; i++){
+            } else {// shift index by 1
+                for (int i = 1; i < adj_list_length + 1; i++) {
                     Vertex vertex = new Vertex();
                     vertex.label = i;
                     vertex.next = null;
+                    array[i - 1] = vertex;
                 }
             }
             // use index_start to continue in the for loop
@@ -182,30 +186,47 @@ public class Outputs {
                 // case for adding edge
                 if (words[0].equals("add") & words[1].equals("edge")) {
                     index_end += 1;
+                    // use Vertex class
+                    Vertex vertex = new Vertex();
                     // use Integer.parseInt to convert string to int
-                    Edge edge = new Edge();
+                    vertex.origin_vertex = Integer.parseInt(words[2]);
+                    vertex.connecting_vertex = Integer.parseInt(words[4]);
+                    vertex.next = null;
                     if (indexIs0) {// if index starts at 0 don't subtract 1
-                        // use Edge class
-                        edge.origin_vertex = Integer.parseInt(words[2]);
-                        edge.connecting_vertex = Integer.parseInt(words[4]);
-                        array[edge.origin_vertex] = edge.connecting_vertex;
+                        Vertex temp = array[vertex.origin_vertex];
+                        temp.next = vertex;
+                        temp = temp.next;
+
+
+
                         // do it twice since undirected
-                        array[edge.connecting_vertex] = edge.origin_vertex;
+                        array[vertex.connecting_vertex].next = vertex;
+                        array[vertex.connecting_vertex] = array[vertex.connecting_vertex].next;
                     } else {// subtract 1 to keep indices same
-                        array[Integer.parseInt(words[4]) - 1] = 1;
+                        array[vertex.origin_vertex - 1].next = vertex;
+                        array[vertex.origin_vertex - 1] = array[vertex.origin_vertex - 1].next;
                         // do it twice since undirected
-                        array[Integer.parseInt(words[2]) - 1] = 1;
+                        array[vertex.connecting_vertex - 1].next = vertex;
+                        array[vertex.connecting_vertex - 1] = array[vertex.connecting_vertex - 1].next;
                     }
                 }
             }
 
-            for (int i = 0; i < array.length; i++) {
-                for (int j = 0; j < array[i].length; j++) {
-                    System.out.print(array[i][j] + " ");
+            for (Vertex vertex : array) {
+                System.out.print("[" + vertex.label + "]" + " ");
+                if (vertex.next != null) {
+                    Vertex temp_vertex = vertex.next;
+                    //check if we print connecting_vertex or origin_vertex
+                    while (temp_vertex != null) {
+                        if (temp_vertex.connecting_vertex != vertex.label) {
+                            System.out.print(temp_vertex.connecting_vertex + " ");
+                        }
+                        temp_vertex = temp_vertex.next;
+                    }
+                    System.out.println();
                 }
                 System.out.println();
             }
-            System.out.println();
         }
     }
 }

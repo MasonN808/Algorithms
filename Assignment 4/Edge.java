@@ -1,5 +1,4 @@
-public class Edge {
-    Edge next;
-    int connecting_vertex;
-    int origin_vertex;
-}
+//public class Vertex {
+//    Edge next;
+//
+//}

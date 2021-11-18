@@ -28,8 +28,9 @@ public class Test {
         String[] copy_words0 = lines.clone();
 
         Outputs out = new Outputs();
-        out.adjacency_matrix(copy_words0);
+//        out.adjacency_matrix(copy_words0);
 
+        out.adjacency_list(copy_words0);
 
     }
 }
