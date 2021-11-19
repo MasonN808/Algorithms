@@ -3,4 +3,8 @@ public class Vertex {
     int label;
     int connecting_vertex;
     int origin_vertex;
+
+
+//    Vertex next;
+//    int label;
 }

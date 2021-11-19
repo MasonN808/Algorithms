@@ -196,44 +196,111 @@ public class Outputs {
                     index_end += 1;
                     // use Vertex class
 
-                    Vertex vertex = new Vertex();
-                    vertex.origin_vertex = Integer.parseInt(words[2]);
-                    vertex.connecting_vertex = Integer.parseInt(words[4]);
-                    vertex.next = null;
-
                     if (indexIs0) {// if index starts at 0 don't subtract 1
-                        Vertex head = array[vertex.origin_vertex];
+                        Vertex vertex1 = new Vertex();
+                        vertex1.origin_vertex = Integer.parseInt(words[2]);
+                        vertex1.connecting_vertex = Integer.parseInt(words[4]);
+                        vertex1.next = null;
+                        Vertex head = array[vertex1.origin_vertex];
                         while (head.next != null) {
                             head = head.next;
                         }
-                        head.next = vertex;
+                        head.next = vertex1;
 
+                        Vertex vertex2 = new Vertex();
+                        vertex2.origin_vertex = Integer.parseInt(words[2]);
+                        vertex2.connecting_vertex = Integer.parseInt(words[4]);
+                        vertex2.next = null;
                         // do it twice since undirected
-                        Vertex head1 = array[vertex.connecting_vertex];
+                        Vertex head1 = array[vertex2.connecting_vertex];
                         while (head1.next != null) {
                             head1 = head1.next;
                         }
-                        head1.next = vertex;
+                        head1.next = vertex2;
                     } else {// subtract 1 to keep indices same
-                        Vertex head = array[vertex.origin_vertex - 1];
-                        System.out.println(head.label);
+                        Vertex vertex1 = new Vertex();
+                        vertex1.origin_vertex = Integer.parseInt(words[2]);
+                        vertex1.connecting_vertex = Integer.parseInt(words[4]);
+                        vertex1.next = null;
+                        Vertex head = array[vertex1.origin_vertex - 1];
                         while (head.next != null) {
                             head = head.next;
                         }
-                        head.next = vertex;
+                        head.next = vertex1;
 
                         // do it twice since undirected
-                        Vertex head1 = array[vertex.connecting_vertex - 1];
+                        Vertex vertex2 = new Vertex();
+                        vertex2.origin_vertex = Integer.parseInt(words[2]);
+                        vertex2.connecting_vertex = Integer.parseInt(words[4]);
+                        vertex2.next = null;
+                        Vertex head1 = array[vertex2.connecting_vertex - 1];
 //                        System.out.println(head1.label);
                         while (head1.next != null) {
                             head1 = head1.next;
                         }
-                        head1.next = vertex;
+                        head1.next = vertex2;
                     }
 
                 }
 
             }
+
+//            for (int i = index_start; i < index_end; i++) {
+//                // case if reached to end of file/(array of lines)
+//                if (lines.length <= index_end) {
+//                    break;
+//                }
+//                String line = lines[i];
+//                String[] words = line.split(" ");
+//                // check if line is blank; if so, move to next graph
+//                if (line.isBlank()) {
+//                    break;
+//                }
+//
+//                // case for adding edge
+//                if (words[0].equals("add") & words[1].equals("edge")) {
+//                    // use Integer.parseInt to convert string to int
+////                    vertices_processed.add(Integer.parseInt(words[0]));
+//                    index_end += 1;
+//                    // use Vertex class
+//
+//                    Vertex vertex = new Vertex();
+//                    vertex.label = Integer.parseInt(words[2]);
+//                    vertex.next = null;
+//
+//                    if (indexIs0) {// if index starts at 0 don't subtract 1
+//                        Vertex head = array[vertex.origin_vertex];
+//                        while (head.next != null) {
+//                            head = head.next;
+//                        }
+//                        head.next = vertex;
+//
+//                        // do it twice since undirected
+//                        Vertex head1 = array[vertex.connecting_vertex];
+//                        while (head1.next != null) {
+//                            head1 = head1.next;
+//                        }
+//                        head1.next = vertex;
+//                    } else {// subtract 1 to keep indices same
+//                        Vertex head = array[vertex.label - 1];
+//                        System.out.println(head.label);
+//                        while (head.next != null) {
+//                            head = head.next;
+//                        }
+//                        head.next = vertex;
+//
+//                        // do it twice since undirected
+//                        Vertex head1 = array[vertex.connecting_vertex - 1];
+////                        System.out.println(head1.label);
+//                        while (head1.next != null) {
+//                            head1 = head1.next;
+//                        }
+//                        head1.next = vertex;
+//                    }
+//
+//                }
+//
+//            }
 
             for (Vertex vertex : array) {
                 System.out.print("[" + vertex.label + "]" + " ");
@@ -244,9 +311,11 @@ public class Outputs {
                         if (temp_vertex.connecting_vertex != vertex.label) {
                             System.out.print(temp_vertex.connecting_vertex + " ");
                         }
+                        if (temp_vertex.origin_vertex != vertex.label) {
+                            System.out.print(temp_vertex.origin_vertex + " ");
+                        }
                         temp_vertex = temp_vertex.next;
                     }
-                    System.out.println();
                 }
                 System.out.println();
             }
