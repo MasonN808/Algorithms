@@ -1,5 +1,6 @@
 public class Node {
     String name;
-    Node next;
+    Node left = null;
+    Node right = null;
 }
 

@@ -377,7 +377,6 @@ public class Outputs {
                         Vertex vertex1 = new Vertex();
                         vertex1.origin_vertex = Integer.parseInt(words[2]);
                         vertex1.connecting_vertex = Integer.parseInt(words[4]);
-                        vertex1.processed = false;
                         vertex1.label = vertex1.connecting_vertex;
                         vertex1.neighbors = array[vertex1.connecting_vertex-1].neighbors;
                         Vertex head = array[vertex1.origin_vertex-1];
@@ -389,12 +388,11 @@ public class Outputs {
                         vertex2.origin_vertex = Integer.parseInt(words[2]);
                         vertex2.connecting_vertex = Integer.parseInt(words[4]);
                         vertex2.label = vertex1.origin_vertex;
-                        vertex2.processed = false;
                         vertex2.neighbors = array[vertex2.origin_vertex-1].neighbors;
                         Vertex head1 = array[vertex2.connecting_vertex-1];
                         head1.neighbors.add(vertex2);
 
-//                        vertex1.label = vertex1.origin_vertex;
+//                        vertex1.label = vertex1.connecting_vertex;
 //                        vertex1.neighbors = array[vertex1.origin_vertex-1].neighbors;
 //                        Vertex head1 = array[vertex1.connecting_vertex-1];
 //                        head1.neighbors.add(vertex1);
