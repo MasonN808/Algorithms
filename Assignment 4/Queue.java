@@ -20,7 +20,7 @@ public class Queue {
     public int dequeue(){
         int retval;
         if(!isEmpty()){
-            retval = head.label;
+            retval = head.connecting_vertex;
             head = head.next;
             if(isEmpty()){
                 tail = null;

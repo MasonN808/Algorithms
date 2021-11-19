@@ -32,7 +32,7 @@ public class Test {
 //        out.adjacency_matrix(copy_words0);
         // outputs adjacency lists
 //        out.adjacency_list(copy_words0);
-        out.adjacency_list(copy_words0);
+        out.linked_objects(copy_words0);
 
     }
 }

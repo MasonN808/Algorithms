@@ -19,10 +19,12 @@ public class Search {
         while (!queue.isEmpty()){
             int data = queue.dequeue();
             System.out.print(data);
-            for (Vertex neighbor: v.neighbors){
-                if (!neighbor.processed){
-                    queue.enqueue(neighbor);
-                    neighbor.processed = true;
+            if (v.neighbors != null) {
+                for (Vertex neighbor : v.neighbors) {
+                    if (!neighbor.processed) {
+                        queue.enqueue(neighbor);
+                        neighbor.processed = true;
+                    }
                 }
             }
         }
