@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Outputs {
 
     /**
@@ -155,6 +158,7 @@ public class Outputs {
             //make array of vertex objects
             Vertex[] array = new Vertex[adj_list_length];
             // check starting index
+
             if (indexIs0) {
                 for (int i = 0; i < adj_list_length; i++) {
                     // from Vertex class
@@ -171,6 +175,7 @@ public class Outputs {
                     array[i - 1] = vertex;
                 }
             }
+
             // use index_start to continue in the for loop
             for (int i = index_start; i < index_end; i++) {
                 // case if reached to end of file/(array of lines)
@@ -183,33 +188,51 @@ public class Outputs {
                 if (line.isBlank()) {
                     break;
                 }
+
                 // case for adding edge
                 if (words[0].equals("add") & words[1].equals("edge")) {
+                    // use Integer.parseInt to convert string to int
+//                    vertices_processed.add(Integer.parseInt(words[0]));
                     index_end += 1;
                     // use Vertex class
+
                     Vertex vertex = new Vertex();
-                    // use Integer.parseInt to convert string to int
                     vertex.origin_vertex = Integer.parseInt(words[2]);
                     vertex.connecting_vertex = Integer.parseInt(words[4]);
                     vertex.next = null;
+
                     if (indexIs0) {// if index starts at 0 don't subtract 1
-                        Vertex temp = array[vertex.origin_vertex];
-                        temp.next = vertex;
-                        temp = temp.next;
-
-
+                        Vertex head = array[vertex.origin_vertex];
+                        while (head.next != null) {
+                            head = head.next;
+                        }
+                        head.next = vertex;
 
                         // do it twice since undirected
-                        array[vertex.connecting_vertex].next = vertex;
-                        array[vertex.connecting_vertex] = array[vertex.connecting_vertex].next;
+                        Vertex head1 = array[vertex.connecting_vertex];
+                        while (head1.next != null) {
+                            head1 = head1.next;
+                        }
+                        head1.next = vertex;
                     } else {// subtract 1 to keep indices same
-                        array[vertex.origin_vertex - 1].next = vertex;
-                        array[vertex.origin_vertex - 1] = array[vertex.origin_vertex - 1].next;
+                        Vertex head = array[vertex.origin_vertex - 1];
+                        System.out.println(head.label);
+                        while (head.next != null) {
+                            head = head.next;
+                        }
+                        head.next = vertex;
+
                         // do it twice since undirected
-                        array[vertex.connecting_vertex - 1].next = vertex;
-                        array[vertex.connecting_vertex - 1] = array[vertex.connecting_vertex - 1].next;
+                        Vertex head1 = array[vertex.connecting_vertex - 1];
+//                        System.out.println(head1.label);
+                        while (head1.next != null) {
+                            head1 = head1.next;
+                        }
+                        head1.next = vertex;
                     }
+
                 }
+
             }
 
             for (Vertex vertex : array) {
