@@ -7,7 +7,7 @@ public class Test {
     public static void main(String[] args) {
         String[] lines = {};
         // Read line by line the txt file using File reader
-        String fileName = "Assignment 4/graphs1.txt";
+        String fileName = "Assignment 4/graphs1.txt";  //REMEMBER TO NOT HARDCODE
         File file = new File(fileName);
         try {
             FileReader fr = new FileReader(file);
@@ -28,8 +28,10 @@ public class Test {
         String[] copy_words0 = lines.clone();
 
         Outputs out = new Outputs();
+        // outputs matrices
 //        out.adjacency_matrix(copy_words0);
-
+        // outputs adjacency lists
+//        out.adjacency_list(copy_words0);
         out.adjacency_list(copy_words0);
 
     }
