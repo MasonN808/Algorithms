@@ -4,7 +4,4 @@ public class Vertex {
     int connecting_vertex;
     int origin_vertex;
 
-
-//    Vertex next;
-//    int label;
 }
