@@ -32,10 +32,10 @@ public class Test {
         Outputs out = new Outputs();
         // outputs matrices
         System.out.println("ADJACENCY MATRICES: ");
-//        out.adjacency_matrix(copy_graphs0);
+        out.adjacency_matrix(copy_graphs0);
         // outputs adjacency lists
         System.out.println("ADJACENCY LISTS: ");
-//        out.adjacency_list(copy_graphs0);
+        out.adjacency_list(copy_graphs0);
         System.out.println("LINKED OBJECTS: ");
         out.linked_objects(copy_graphs0);
 
@@ -87,22 +87,22 @@ public class Test {
         String[] copy_words2 = lines2.clone();
         String[] copy_words1 = lines1.clone();
 
-//        Binary_Search_Tree bst = new Binary_Search_Tree();
-//        System.out.println("BINARY SEARCH TREE POPULATING: ");
-//        Node root = bst.makeBST(copy_words1);
-//        System.out.println("BINARY SEARCH TREE IN-ORDER TRAVERSAL: ");
-//        bst.inorder(root);
-//        System.out.println("BINARY SEARCH TREE SEARCHING FOR ITEMS W/ COMPARISONS: ");
-//        float total_comparisons = 0;
-//        for (String i: copy_words2){
-//            System.out.print(i + " ");
-//            bst.search(root, i);
-//            System.out.println();
-//            System.out.println("Comparisons: " + bst.comparisons);
-//            total_comparisons += bst.comparisons;
-//            bst.comparisons = 0;
-//        }
-//        System.out.println("AVERAGE NUMBER OF COMPARISONS: " + total_comparisons/FILE_LENGTH);
+        Binary_Search_Tree bst = new Binary_Search_Tree();
+        System.out.println("BINARY SEARCH TREE POPULATING: ");
+        Node root = bst.makeBST(copy_words1);
+        System.out.println("BINARY SEARCH TREE IN-ORDER TRAVERSAL: ");
+        bst.inorder(root);
+        System.out.println("BINARY SEARCH TREE SEARCHING FOR ITEMS W/ COMPARISONS: ");
+        float total_comparisons = 0;
+        for (String i: copy_words2){
+            System.out.print(i + " ");
+            bst.search(root, i);
+            System.out.println();
+            System.out.println("Comparisons: " + bst.comparisons);
+            total_comparisons += bst.comparisons;
+            bst.comparisons = 0;
+        }
+        System.out.println("AVERAGE NUMBER OF COMPARISONS: " + total_comparisons/FILE_LENGTH);
 
 
     }

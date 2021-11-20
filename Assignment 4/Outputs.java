@@ -407,13 +407,14 @@ public class Outputs {
             Vertex[] copy_vertexes1 = array.clone();
             Search search = new Search();
             Search search1 = new Search();
-            System.out.print("Breadth First: ");
-            search.breadth_first(copy_vertexes[0], array);
-            System.out.println();
             System.out.print("Depth First: ");
 //            boolean[] visited = new boolean[adj_list_length];
             search1.depth_first(copy_vertexes1[0], array);
             System.out.println();
+            System.out.print("Breadth First: ");
+            search.breadth_first(copy_vertexes[0], array);
+            System.out.println();
+
 
 
         }
