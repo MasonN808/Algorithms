@@ -4,6 +4,8 @@ import java.util.Random;
 
 public class Test {
 
+
+
     public static void main(String[] args) {
         String[] lines = {};
         // Read line by line the txt file using File reader
@@ -75,6 +77,7 @@ public class Test {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        final int FILE_LENGTH = lines2.length;
 
         // copy_words2 -> magicitems-find-in-bst.txt
         // copy_words1 -> magicitems.txt
@@ -86,7 +89,17 @@ public class Test {
         Node root = bst.makeBST(copy_words1);
         System.out.println("BINARY SEARCH TREE IN-ORDER TRAVERSAL: ");
         bst.inorder(root);
-
+        System.out.println("BINARY SEARCH TREE SEARCHING FOR ITEMS W/ COMPARISONS: ");
+        float total_comparisons = 0;
+        for (String i: copy_words2){
+            System.out.print(i + " ");
+            bst.search(root, i);
+            System.out.println();
+            System.out.println("Comparisons: " + bst.comparisons);
+            total_comparisons += bst.comparisons;
+            bst.comparisons = 0;
+        }
+        System.out.println("AVERAGE NUMBER OF COMPARISONS: " + total_comparisons/FILE_LENGTH);
 
 
     }

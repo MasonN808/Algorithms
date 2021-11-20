@@ -2,9 +2,8 @@ public class Binary_Search_Tree {
     int i = 0;
     String path;
     int comparisons;
-//    Node first_root;
+    Node first_root;
     public Node populateBST(Node root, String word){
-
         // if there is no root to begin with or it hits a terminal node
         if (root == null){
 //            comparisons += 1;
@@ -44,7 +43,7 @@ public class Binary_Search_Tree {
                 gotroot = true;
                 Node temp_first_root = new Node();
                 temp_first_root.name = word;
-//                first_root = temp_first_root;
+                first_root = temp_first_root;
             }
             System.out.println(word + ": ");
             root = populateBST(root, word);
@@ -68,4 +67,25 @@ public class Binary_Search_Tree {
         inorder(root.right);
     }
 
+    public Node search(Node root, String target){
+//        Node root = first_root;
+        if (root.name.equals(target) | root == null){
+            comparisons += 1;
+            return root;
+        }
+
+        if (target.compareTo(root.name) >= 0){
+            comparisons += 1;
+            System.out.print(" " + "L");
+            return search(root.left, target);
+
+        }
+
+        else{
+            comparisons += 1;
+            System.out.print(" " + "R");
+            return search(root.right, target);
+
+        }
+    }
 }
