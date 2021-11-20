@@ -17,16 +17,16 @@ public class Queue {
         }
     }
 
-    public int dequeue(){
-        int retval;
+    public Vertex dequeue(){
+        Vertex retval;
         if(!isEmpty()){
-            retval = head.connecting_vertex;
+            retval = head;
             head = head.next;
             if(isEmpty()){
                 tail = null;
             }
         }else{
-            retval = -10000000;
+            retval = null;
         }
         return retval;
     }

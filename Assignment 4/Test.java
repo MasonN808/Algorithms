@@ -35,9 +35,9 @@ public class Test {
 //        out.adjacency_matrix(copy_graphs0);
         // outputs adjacency lists
         System.out.println("ADJACENCY LISTS: ");
-        out.adjacency_list(copy_graphs0);
+//        out.adjacency_list(copy_graphs0);
         System.out.println("LINKED OBJECTS: ");
-//        out.linked_objects(copy_graphs0);
+        out.linked_objects(copy_graphs0);
 
 
         // Binary Search Tree population and traversal

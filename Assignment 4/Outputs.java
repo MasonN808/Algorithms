@@ -1,10 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
-
 public class Outputs {
-
     /**
      * This method is used to print all adjacency matrices given the lines in the file
+     *
      * @param lines an array of every line in the file
      */
     public void adjacency_matrix(String[] lines) {
@@ -46,7 +45,7 @@ public class Outputs {
                 // case for adding vertex
                 if (words[0].equals("add") & words[1].equals("vertex")) {
                     rows_columns += 1;
-                    if (words[2].equals("0")){
+                    if (words[2].equals("0")) {
                         indexIs0 = true;
                     }
                     continue;
@@ -79,11 +78,11 @@ public class Outputs {
                     index_end += 1;
                     // use Integer.parseInt to convert string to int
 
-                    if (indexIs0){// if index starts at 0 don't subtract 1
+                    if (indexIs0) {// if index starts at 0 don't subtract 1
                         matrix[Integer.parseInt(words[2])][Integer.parseInt(words[4])] = 1;
                         // do it twice since undirected
                         matrix[Integer.parseInt(words[4])][Integer.parseInt(words[2])] = 1;
-                    }else{// subtract 1 to keep indices same
+                    } else {// subtract 1 to keep indices same
                         matrix[Integer.parseInt(words[2]) - 1][Integer.parseInt(words[4]) - 1] = 1;
                         // do it twice since undirected
                         matrix[Integer.parseInt(words[4]) - 1][Integer.parseInt(words[2]) - 1] = 1;
@@ -101,7 +100,7 @@ public class Outputs {
         }
     }
 
-    public void adjacency_list(String[] lines){
+    public void adjacency_list(String[] lines) {
         // use these indices throughout for loops
         int index_start;
         int index_end = 0;
@@ -263,7 +262,7 @@ public class Outputs {
         }
     }
 
-    public void linked_objects(String[] lines){
+    public void linked_objects(String[] lines) {
         // use these indices throughout for loops
         int index_start;
         int index_end = 0;
@@ -384,8 +383,8 @@ public class Outputs {
                         vertex1.origin_vertex = Integer.parseInt(words[2]);
                         vertex1.connecting_vertex = Integer.parseInt(words[4]);
                         vertex1.label = vertex1.connecting_vertex;
-                        vertex1.neighbors = array[vertex1.connecting_vertex-1].neighbors;
-                        Vertex head = array[vertex1.origin_vertex-1];
+                        vertex1.neighbors = array[vertex1.connecting_vertex - 1].neighbors;
+                        Vertex head = array[vertex1.origin_vertex - 1];
                         // add vertex to neighbors attribute
                         head.neighbors.add(vertex1);
 
@@ -394,53 +393,29 @@ public class Outputs {
                         vertex2.origin_vertex = Integer.parseInt(words[2]);
                         vertex2.connecting_vertex = Integer.parseInt(words[4]);
                         vertex2.label = vertex1.origin_vertex;
-                        vertex2.neighbors = array[vertex2.origin_vertex-1].neighbors;
-                        Vertex head1 = array[vertex2.connecting_vertex-1];
+                        vertex2.neighbors = array[vertex2.origin_vertex - 1].neighbors;
+                        Vertex head1 = array[vertex2.connecting_vertex - 1];
                         head1.neighbors.add(vertex2);
-
-//                        vertex1.label = vertex1.connecting_vertex;
-//                        vertex1.neighbors = array[vertex1.origin_vertex-1].neighbors;
-//                        Vertex head1 = array[vertex1.connecting_vertex-1];
-//                        head1.neighbors.add(vertex1);
-
-//                        // Debugging
-//                        System.out.print(head.connecting_vertex + "--");
-//                        // Debugging
-//                        for (Vertex n: head.neighbors) {
-//                            if (n.connecting_vertex != head.label) {
-//                                System.out.print(n.connecting_vertex + " ");
-//                            }else {
-//                                System.out.print(n.origin_vertex + " ");
-//                            }
-//                        }
-//                        // Debugging
-//                        System.out.println();
-
-//                        System.out.print(head.label + "--");
-//                        // Debugging
-//                        for (Vertex n: head.neighbors) {
-//                            System.out.print(n.label + " ");
-//                        }
-//                        // Debugging
-//                        System.out.println();
                     }
+
+//                    System.out.println(array.length);
 
                 }
 
             }
-//            for (Vertex v: array){
-//                System.out.println("Test " + v.);
-//            }
-            System.out.println(array.length);
-
+            Vertex[] copy_vertexes = array.clone();
+            Vertex[] copy_vertexes1 = array.clone();
             Search search = new Search();
-            System.out.print("  Depth First: ");
-            search.depth_first(array[0]);
+            Search search1 = new Search();
+            System.out.print("Breadth First: ");
+            search.breadth_first(copy_vertexes[0]);
             System.out.println();
-            System.out.print("  Breadth First: ");
-            search.breadth_first(array[0]);
+            System.out.print("Depth First: ");
+//            boolean[] visited = new boolean[adj_list_length];
+            search1.depth_first(copy_vertexes1[0]);
             System.out.println();
-        }
 
+
+        }
     }
 }
