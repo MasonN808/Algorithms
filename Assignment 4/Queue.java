@@ -31,15 +31,4 @@ public class Queue {
         return retval;
     }
 
-//    public void show(){
-//        while(!isEmpty()){
-//            if(head.next == null){
-//                System.out.print(head.name);
-//            }else {
-//                System.out.print(head.name + " | ");
-//            }
-//            head = head.next;
-//        }
-//    }
-
 }

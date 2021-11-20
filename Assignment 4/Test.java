@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.Arrays;
-import java.util.Random;
 
 public class Test {
 
@@ -9,7 +8,7 @@ public class Test {
     public static void main(String[] args) {
         String[] lines = {};
         // Read line by line the txt file using File reader
-        String fileName = "Assignment 4/graphs1.txt";  //REMEMBER TO NOT HARDCODE
+        String fileName = "graphs1";  //REMEMBER TO NOT HARDCODE
         File file = new File(fileName);
         try {
             FileReader fr = new FileReader(file);
@@ -43,7 +42,7 @@ public class Test {
         // Binary Search Tree population and traversal
         String[] lines1 = {};
         // Read line by line the txt file using File reader
-        String fileName1 = "Assignment 4/magicitems.txt";  //REMEMBER TO NOT HARDCODE
+        String fileName1 = "magicitems";  //REMEMBER TO NOT HARDCODE
         File file1 = new File(fileName1);
         try {
             FileReader fr = new FileReader(file1);
@@ -63,7 +62,7 @@ public class Test {
 
         String[] lines2 = {};
         // Read line by line the txt file using File reader
-        String fileName2 = "Assignment 4/magicitems-find-in-bst.txt";  //REMEMBER TO NOT HARDCODE
+        String fileName2 = "magicitems-find-in-bst";  //REMEMBER TO NOT HARDCODE
         File file2 = new File(fileName2);
         try {
             FileReader fr = new FileReader(file2);
@@ -82,8 +81,8 @@ public class Test {
         }
         final int FILE_LENGTH = lines2.length;
 
-        // copy_words2 -> magicitems-find-in-bst.txt
-        // copy_words1 -> magicitems.txt
+        // copy_words2 -> magicitems-find-in-bst
+        // copy_words1 -> magicitems
         String[] copy_words2 = lines2.clone();
         String[] copy_words1 = lines1.clone();
 

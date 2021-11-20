@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 public class Outputs {
     /**
      * This method is used to print all adjacency matrices given the lines in the file
@@ -398,8 +397,6 @@ public class Outputs {
                         head1.neighbors.add(vertex2);
                     }
 
-//                    System.out.println(array.length);
-
                 }
 
             }
@@ -408,7 +405,6 @@ public class Outputs {
             Search search = new Search();
             Search search1 = new Search();
             System.out.print("Depth First: ");
-//            boolean[] visited = new boolean[adj_list_length];
             search1.depth_first(copy_vertexes1[0], array);
             System.out.println();
             System.out.print("Breadth First: ");
