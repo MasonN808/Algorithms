@@ -59,7 +59,10 @@ public class Test {
         String[] copy_words1 = lines1.clone();
 
         Binary_Search_Tree bst = new Binary_Search_Tree();
+        System.out.println("BINARY SEARCH TREE POPULATING: ");
         bst.makeBST(copy_words1);
+        System.out.println("BINARY SEARCH TREE IN-ORDER TRAVERSAL: ");
+
 
     }
 }
