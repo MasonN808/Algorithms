@@ -8,4 +8,5 @@ public class Vertex {
     boolean processed = false;
     ArrayList<Vertex> neighbors;
 
+
 }
