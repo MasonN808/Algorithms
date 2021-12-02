@@ -28,7 +28,7 @@ public class Test {
 
         String[] copy_graphs0 = lines.clone();
 
-        Outputs out = new Outputs();
+        LinkedObjects out = new LinkedObjects();
         // outputs matrices
         System.out.println("ADJACENCY MATRICES: ");
         out.adjacency_matrix(copy_graphs0);
