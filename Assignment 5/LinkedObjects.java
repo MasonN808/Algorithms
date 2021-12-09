@@ -66,6 +66,7 @@ public class LinkedObjects {
                     Vertex vertex = new Vertex();
                     vertex.connecting_vertex = i;
                     vertex.label = i;
+                    vertex.next = null;
                     vertex.neighbors = new ArrayList<Vertex>();
                     array[i] = vertex;
                 }
@@ -75,6 +76,7 @@ public class LinkedObjects {
                     Vertex vertex = new Vertex();
                     vertex.connecting_vertex = i;
                     vertex.label = i;
+                    vertex.next = null;
                     vertex.neighbors = new ArrayList<Vertex>();
                     array[i - 1] = vertex;
                 }
@@ -93,6 +95,12 @@ public class LinkedObjects {
                     break;
                 }
 
+                // check if there are two spaces between the weight and the connecting vertex
+                // if so, move up an index
+                if (words[5].equals("")){
+                    words[5] = words[6];
+                }
+
                 // case for adding edge
                 if (words[0].equals("add") & words[1].equals("edge")) {
                     index_end += 1;
@@ -103,6 +111,11 @@ public class LinkedObjects {
                         vertex1.connecting_vertex = Integer.parseInt(words[4]);
                         vertex1.weight = Integer.parseInt(words[5]);
                         vertex1.label = vertex1.connecting_vertex;
+                        Vertex head1 = array[vertex1.origin_vertex - 1];
+                        while (head1.next != null) {
+                            head1 = head1.next;
+                        }
+                        head1.next = vertex1;
 
                     } else {// subtract 1 to keep indices same
                         Vertex vertex1 = new Vertex();
@@ -110,19 +123,25 @@ public class LinkedObjects {
                         vertex1.connecting_vertex = Integer.parseInt(words[4]);
                         vertex1.weight = Integer.parseInt(words[5]);
                         vertex1.label = vertex1.connecting_vertex;
+                        Vertex head1 = array[vertex1.origin_vertex - 1];
+                        while (head1.next != null) {
+                            head1 = head1.next;
+                        }
+                        head1.next = vertex1;
                     }
                 }
             }
+
+
             Vertex[] copy_vertexes = array.clone();
-            Vertex[] copy_vertexes1 = array.clone();
-            Search search = new Search();
-            Search search1 = new Search();
-            System.out.print("Depth First: ");
-            search1.depth_first(copy_vertexes1[0], array);
-            System.out.println();
-            System.out.print("Breadth First: ");
-            search.breadth_first(copy_vertexes[0], array);
-            System.out.println();
+            for(Vertex i: copy_vertexes){
+                System.out.print("[" + i.label+ "]" + " ");
+                while (i.next != null){
+                    i = i.next;
+                    System.out.print(i.connecting_vertex + "(" + i.weight + ")" + " ");
+                }
+                System.out.println();
+            }
 
         }
     }
