@@ -32,6 +32,8 @@ public class Test {
         // outputs matrices
         System.out.println("GRAPH AS LINKED OBJECTS TESTING: ");
         out.linked_objects(copy_graphs0);
+        System.out.println("Testing: matrix");
+        out.adjacency_matrix(copy_graphs0);
 
 
     }
