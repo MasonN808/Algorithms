@@ -8,7 +8,7 @@ public class Test {
     public static void main(String[] args) {
         String[] lines = {};
         // Read line by line the txt file using File reader
-        String fileName = "graphs1";  //REMEMBER TO NOT HARDCODE
+        String fileName = "Assignment 4/graphs1";  //REMEMBER TO NOT HARDCODE
         File file = new File(fileName);
         try {
             FileReader fr = new FileReader(file);
