@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 public class LinkedObjects {
+    int edges = 0;
     public void linked_objects(String[] lines) {
         // use these indices throughout for loops
+        edges = 0;
         int index_start;
         int index_end = 0;
         // for printing purposes
@@ -103,6 +105,7 @@ public class LinkedObjects {
 
                 // case for adding edge
                 if (words[0].equals("add") & words[1].equals("edge")) {
+                    edges +=1;
                     index_end += 1;
                     // you need to define vertex1 and vertex2 since not doing so creates a pointer infinitely pointing to itself
                     if (indexIs0) {// if index starts at 0 don't subtract 1
@@ -147,6 +150,7 @@ public class LinkedObjects {
     }
 
     public ArrayList<int[][]> adjacency_matrix(String[] lines) {
+        edges = 0;
         // use these indices throughout for loops
         int index_start;
         int index_end = 0;
@@ -223,6 +227,7 @@ public class LinkedObjects {
 
                 // case for adding edge
                 if (words[0].equals("add") & words[1].equals("edge")) {
+                    edges += 1;
                     index_end += 1;
                     // use Integer.parseInt to convert string to int
                     if (indexIs0) {// if index starts at 0 don't subtract 1

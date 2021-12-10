@@ -36,7 +36,7 @@ public class Test {
 //        out.adjacency_matrix(copy_graphs0);
         SSSP short_path_algo = new SSSP();
         for (int[][] i: out.adjacency_matrix(copy_graphs0))
-            short_path_algo.BellmanFord(i, i[0].length, , 1);
+            short_path_algo.BellmanFord(i, i[0].length, |E|, 1);
 
 
     }
