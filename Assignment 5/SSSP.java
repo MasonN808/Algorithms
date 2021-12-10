@@ -68,25 +68,23 @@ public class SSSP {
 //        printSolution(dist, order, path);
 //    }
 //}
-    static void BellmanFord(int graph[][], int V, int E, int src) {
+    static void BellmanFord(int[][] graph, int V, int E, int src) {
         // Initialize distance of all vertices as infinite.
         int[] dis = new int[V];
         for (int i = 0; i < V; i++)
             dis[i] = Integer.MAX_VALUE;
 
         // initialize distance of source as 0
-        dis[src] = 0;
+        dis[src - 1] = 0;
 
         // Relax all edges |V| - 1 times. A simple
         // shortest path from src to any other
         // vertex can have at-most |V| - 1 edges
         for (int i = 0; i < V - 1; i++) {
-
             for (int j = 0; j < E; j++) {
-                if (dis[graph[j][0]] != Integer.MAX_VALUE && dis[graph[j][0]] + graph[j][2] <
-                        dis[graph[j][1]])
-                    dis[graph[j][1]] =
-                            dis[graph[j][0]] + graph[j][2];
+                if (dis[graph[j][0]] != Integer.MAX_VALUE && dis[graph[j][0]] + graph[j][2] < dis[graph[j][1]]) {
+                    dis[graph[j][1]] = dis[graph[j][0]] + graph[j][2];
+                }
             }
         }
 

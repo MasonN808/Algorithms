@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+
 public class LinkedObjects {
     int edges = 0;
     public void linked_objects(String[] lines) {
@@ -149,7 +150,20 @@ public class LinkedObjects {
         }
     }
 
-    public ArrayList<int[][]> adjacency_matrix(String[] lines) {
+    // to insert row into 2-D array in
+    public int[][] insertRow(int[][] m, int r, int[] data) {
+        int[][] out = new int[m.length + 1][];
+        for (int i = 0; i < r; i++) {
+            out[i] = m[i];
+        }
+        out[r] = data;
+        for (int i = r + 1; i < out.length; i++) {
+            out[i] = m[i - 1];
+        }
+        return out;
+    }
+
+    public ArrayList<int[][]> matrices(String[] lines) {
         edges = 0;
         // use these indices throughout for loops
         int index_start;
@@ -205,7 +219,7 @@ public class LinkedObjects {
 
             // create instance of matrix given number of vertices declared
             index_end = index_start + 1;
-            int[][] matrix = new int[rows_columns][rows_columns];
+            int[][] matrix = new int[0][3];
             // use index_start to continue in the for loop
             for (int i = index_start; i < index_end; i++) {
                 // case if reached to end of file/(array of lines)
@@ -231,10 +245,16 @@ public class LinkedObjects {
                     index_end += 1;
                     // use Integer.parseInt to convert string to int
                     if (indexIs0) {// if index starts at 0 don't subtract 1
-                        matrix[Integer.parseInt(words[2])][Integer.parseInt(words[4])] = Integer.parseInt(words[5]);
+                        // make array of data for added edge
+                        int[] newData = new int[]{Integer.parseInt(words[2]), Integer.parseInt(words[4]), Integer.parseInt(words[5])};
+                        // append the array to the matrix
+                        matrix = insertRow(matrix, matrix.length, newData);
 
                     } else {// subtract 1 to keep indices same
-                        matrix[Integer.parseInt(words[2]) - 1][Integer.parseInt(words[4]) - 1] = Integer.parseInt(words[5]);
+                        // make array of data for added edge
+                        int[] newData = new int[]{Integer.parseInt(words[2]), Integer.parseInt(words[4]), Integer.parseInt(words[5])};
+                        // append the array to the matrix
+                        matrix = insertRow(matrix, matrix.length, newData);
                     }
                 }
             }
