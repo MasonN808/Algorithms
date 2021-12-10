@@ -34,19 +34,13 @@ public class Test {
         out.linked_objects(copy_graphs0);
 //        System.out.println("Testing: matrix");
 //        out.adjacency_matrix(copy_graphs0);
-        SSSP short_path_algo = new SSSP();
+        int j = 0;
         for (int[][] i: out.matrices(copy_graphs0)){
-            int E = 0;
-            // get number of edges in each graph
-            // could be done better
-            for (int[] j: i){
-                for (int k: j){
-                    if (k != 0){
-                        E += 1;
-                    }
-                }
-            }
-            SSSP.BellmanFord(i, i[0].length, E, 1);
+//            System.out.println(i[6][0]);
+//            System.out.println(out.num_vertices.get(j));
+            // i.length = |E|, out.num_vertices.get(j) = |V|, i = matrix, 1 = node source
+            SSSP.BellmanFord(i, out.num_vertices.get(j), i.length, 1);
+            j+=1;
         }
 
 

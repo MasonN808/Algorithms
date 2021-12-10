@@ -1,10 +1,10 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class LinkedObjects {
-    int edges = 0;
+    ArrayList<Integer> num_vertices = new ArrayList<>();
     public void linked_objects(String[] lines) {
         // use these indices throughout for loops
-        edges = 0;
         int index_start;
         int index_end = 0;
         // for printing purposes
@@ -106,7 +106,6 @@ public class LinkedObjects {
 
                 // case for adding edge
                 if (words[0].equals("add") & words[1].equals("edge")) {
-                    edges +=1;
                     index_end += 1;
                     // you need to define vertex1 and vertex2 since not doing so creates a pointer infinitely pointing to itself
                     if (indexIs0) {// if index starts at 0 don't subtract 1
@@ -164,7 +163,6 @@ public class LinkedObjects {
     }
 
     public ArrayList<int[][]> matrices(String[] lines) {
-        edges = 0;
         // use these indices throughout for loops
         int index_start;
         int index_end = 0;
@@ -177,7 +175,7 @@ public class LinkedObjects {
             graph_id += 1;
             index_start = index_end;
             // don't need rows and columns since adjacency matrix is symmetric ==> rows = columns
-            int rows_columns = 0;
+            int vertices = 0;
             // get indices for for loop for edges
             for (int i = index_start; i < lines.length; i++) {
                 String line = lines[i];
@@ -203,7 +201,7 @@ public class LinkedObjects {
                 }
                 // case for adding vertex
                 if (words[0].equals("add") & words[1].equals("vertex")) {
-                    rows_columns += 1;
+                    vertices += 1;
                     if (words[2].equals("0")) {
                         indexIs0 = true;
                     }
@@ -216,8 +214,9 @@ public class LinkedObjects {
                 }
 
             }
-
-            // create instance of matrix given number of vertices declared
+            // add number of vertices to list
+            num_vertices.add(vertices);
+            // create instance of matrix
             index_end = index_start + 1;
             int[][] matrix = new int[0][3];
             // use index_start to continue in the for loop
@@ -241,7 +240,6 @@ public class LinkedObjects {
 
                 // case for adding edge
                 if (words[0].equals("add") & words[1].equals("edge")) {
-                    edges += 1;
                     index_end += 1;
                     // use Integer.parseInt to convert string to int
                     if (indexIs0) {// if index starts at 0 don't subtract 1
@@ -259,13 +257,13 @@ public class LinkedObjects {
                 }
             }
 
-            for (int i = 0; i < matrix.length; i++) {
-                for (int j = 0; j < matrix[i].length; j++) {
-                    System.out.print(matrix[i][j] + " ");
-                }
-                System.out.println();
-            }
-            System.out.println();
+//            for (int i = 0; i < matrix.length; i++) {
+//                for (int j = 0; j < matrix[i].length; j++) {
+//                    System.out.print(matrix[i][j] + " ");
+//                }
+//                System.out.println();
+//            }
+//            System.out.println();
             matrices.add(matrix);
         }
         return matrices;
