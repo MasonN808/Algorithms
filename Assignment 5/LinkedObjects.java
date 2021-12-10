@@ -146,7 +146,7 @@ public class LinkedObjects {
         }
     }
 
-    public void adjacency_matrix(String[] lines) {
+    public ArrayList<int[][]> adjacency_matrix(String[] lines) {
         // use these indices throughout for loops
         int index_start;
         int index_end = 0;
@@ -154,6 +154,7 @@ public class LinkedObjects {
         int graph_id = 0;
         // for vertex starting index
         boolean indexIs0 = false;
+        ArrayList<int[][]> matrices = new ArrayList<>();
         while (index_end <= lines.length) {
             graph_id += 1;
             index_start = index_end;
@@ -224,15 +225,11 @@ public class LinkedObjects {
                 if (words[0].equals("add") & words[1].equals("edge")) {
                     index_end += 1;
                     // use Integer.parseInt to convert string to int
-
                     if (indexIs0) {// if index starts at 0 don't subtract 1
                         matrix[Integer.parseInt(words[2])][Integer.parseInt(words[4])] = Integer.parseInt(words[5]);
-//                        // do it twice since undirected
-//                        matrix[Integer.parseInt(words[4])][Integer.parseInt(words[2])] = 1;
+
                     } else {// subtract 1 to keep indices same
                         matrix[Integer.parseInt(words[2]) - 1][Integer.parseInt(words[4]) - 1] = Integer.parseInt(words[5]);
-//                        // do it twice since undirected
-//                        matrix[Integer.parseInt(words[4]) - 1][Integer.parseInt(words[2]) - 1] = 1;
                     }
                 }
             }
@@ -244,6 +241,8 @@ public class LinkedObjects {
                 System.out.println();
             }
             System.out.println();
+            matrices.add(matrix);
         }
+        return matrices;
     }
 }

@@ -32,8 +32,11 @@ public class Test {
         // outputs matrices
         System.out.println("GRAPH AS LINKED OBJECTS TESTING: ");
         out.linked_objects(copy_graphs0);
-        System.out.println("Testing: matrix");
-        out.adjacency_matrix(copy_graphs0);
+//        System.out.println("Testing: matrix");
+//        out.adjacency_matrix(copy_graphs0);
+        SSSP short_path_algo = new SSSP();
+        for (int[][] i: out.adjacency_matrix(copy_graphs0))
+            short_path_algo.sssp(i, 1, i[0].length);
 
 
     }
