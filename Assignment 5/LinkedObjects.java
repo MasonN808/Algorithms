@@ -166,13 +166,11 @@ public class LinkedObjects {
         // use these indices throughout for loops
         int index_start;
         int index_end = 0;
-        // for printing purposes
-        int graph_id = 0;
         // for vertex starting index
         boolean indexIs0 = false;
+        //initialize an arraylist of 2-arrays (matrices) so that we can pull the individual graphs in the testing file
         ArrayList<int[][]> matrices = new ArrayList<>();
         while (index_end <= lines.length) {
-            graph_id += 1;
             index_start = index_end;
             // don't need rows and columns since adjacency matrix is symmetric ==> rows = columns
             int vertices = 0;
@@ -194,8 +192,6 @@ public class LinkedObjects {
                 String[] words = line.split(" ");
                 // case for declaring new graph
                 if (words[0].equals("new")) {
-                    // print graph_id
-                    System.out.println("Graph Number: " + graph_id);
                     //skip the line
                     continue;
                 }
@@ -244,7 +240,7 @@ public class LinkedObjects {
                     // use Integer.parseInt to convert string to int
                     if (indexIs0) {// if index starts at 0 don't subtract 1
                         // make array of data for added edge
-                        int[] newData = new int[]{Integer.parseInt(words[2]), Integer.parseInt(words[4]), Integer.parseInt(words[5])};
+                        int[] newData = new int[]{Integer.parseInt(words[2]) + 1, Integer.parseInt(words[4]) + 1, Integer.parseInt(words[5])};
                         // append the array to the matrix
                         matrix = insertRow(matrix, matrix.length, newData);
 
