@@ -85,8 +85,6 @@ public class Heist implements Cloneable{
         RelativeInsertionSort_Decreasing RIS = new RelativeInsertionSort_Decreasing();
         // relatively sort unit_prices and spices
         RIS.relative_insertionSort_decreasing(unit_prices, spices);
-        // I don't know how to make deep clone of spices so best solution:
-//        Spice[][] copy_spices = new Spice[][]{spices.clone(), spices.clone(), spices.clone(), spices.clone(), spices.clone()};
         // start filling each knapsack and print results
         int out_index = 0;
         for (int i=0; i < knapsack_capacities.size(); i++){
@@ -204,21 +202,5 @@ public class Heist implements Cloneable{
         }
     }
 
-//    public Spice[] clone() throws CloneNotSupportedException
-//    {
-//        // Assign the shallow copy to
-//        // new reference variable t
-//        Spice[] t = (Spice[]) super.clone();
-//
-//        // Creating a deep copy for c
-//        for (int i = 0; i < )
-//        t.c = new Test();
-//        t.c.x = c.x;
-//        t.c.y = c.y;
-//
-//        // Create a new object for the field c
-//        // and assign it to shallow copy obtained,
-//        // to make it a deep copy
-//        return t;
-//    }
+
 }

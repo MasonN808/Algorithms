@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class SSSP {
-    static void BellmanFord(int[][] graph, int V, int E, int src) {
+    static void bellman_ford(int[][] graph, int V, int E, int src) {
         // Initialize distance of all vertices as very big value.
         int[] dis = new int[V];
         for (int i = 0; i < V; i++)
