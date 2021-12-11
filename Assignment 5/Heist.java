@@ -157,12 +157,14 @@ public class Heist implements Cloneable{
             // how many differing color spices were used
             int red = 0, green = 0, blue = 0, orange = 0;
             int index = 0;
-            while (sack_size != 0){
+            while (sack_size != 0 && copy_spices[copy_spices.length-1].quantity != 0){
                 for (int j = 0; j < copy_spices.length; j++){
+                    index += 1;
                     if(copy_spices[j].quantity != 0){
                         sack_size -= 1;
                         worth += copy_spices[j].unit_price;
                         copy_spices[j].quantity -= 1;
+                        System.out.println(copy_spices[1].quantity);
                         switch (copy_spices[j].color) {
                             case "red" -> red += 1;
                             case "green" -> green += 1;
@@ -173,7 +175,11 @@ public class Heist implements Cloneable{
                             break;
                         }
                     }
+//                    if(index == 3){
+//                        break;
+//                    }
                 }
+
             }
             int index1 = 0;
             int[] amounts = new int[]{red, green, blue, orange};
