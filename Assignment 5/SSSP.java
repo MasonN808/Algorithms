@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class SSSP {
     static void bellman_ford(int[][] graph, int V, int E, int src) {
         // Initialize distance of all vertices as very big value.
+        StringBuilder path = new StringBuilder();
         int[] dis = new int[V];
         for (int i = 0; i < V; i++)
             dis[i] = Integer.MAX_VALUE;
@@ -29,8 +30,8 @@ public class SSSP {
             }
         }
 
-        System.out.println("Vertex \t\t Distance from Source");
+//        System.out.println("Vertex \t\t\t Cost");
         for (int i = 0; i < V; i++)
-            System.out.println(i+1 + "\t\t\t " + dis[i]);
+            System.out.println(src + " -----> " + (i+1) + " cost is " + dis[i] + "; path:" + path);
     }
 }
