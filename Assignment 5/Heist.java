@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Heist {
@@ -12,7 +13,7 @@ public class Heist {
         Spice[] spices = new Spice[NUMBER_OF_SPICES];
         // use unit_prices to sort the spices array
         float[] unit_prices = new float[NUMBER_OF_SPICES];
-        int[] knapsack_capacities = new int[NUMBER_OF_KNAPSACKS];
+        ArrayList<Integer> knapsack_capacities = new ArrayList<>();
 //        while (index_end <= lines.length) {
 //            index_start = index_end;
         for (int i = index_start; i < lines.length; i++) {
@@ -38,6 +39,7 @@ public class Heist {
                 String[] subwords = words[j].split("=");
                 if (subwords[0].equals("knapsackcapacity")) {
                     onKnapsack = true;
+                    knapsack_capacities.add(Integer.parseInt(subwords[1]));
                 }
                 if (!onKnapsack) {
                     // populate the spice attributes
@@ -60,10 +62,53 @@ public class Heist {
         RelativeInsertionSort_Decreasing RIS = new RelativeInsertionSort_Decreasing();
         // relatively sort unit_prices and spices
         RIS.relative_insertionSort_decreasing(unit_prices, spices);
-        /* Debugging
-        for (Spice i: spices){
-            System.out.println(i.color);
+
+        // start filling each knapsack and print results
+        for (int i=0; i < knapsack_capacities.size(); i++){
+            Spice[] copy_spices = spices.clone();
+            int sack_size = knapsack_capacities.get(i);
+            // how much the knapsack is worth
+            float worth = 0;
+            // how many differing color spices were used
+            int red = 0, green = 0, blue = 0, orange = 0;
+            int index = 0;
+            while (sack_size != 0 || index == 5){
+                for (int j = 0; j < copy_spices.length; j++){
+                    if(copy_spices[j].quantity != 0){
+                        sack_size -= 1;
+                        worth += copy_spices[j].unit_price;
+                        copy_spices[j].quantity -= 1;
+                        switch (copy_spices[j].color) {
+                            case "red" -> red += 1;
+                            case "green" -> green += 1;
+                            case "blue" -> blue += 1;
+                            case "orange" -> orange += 1;
+                        }
+                        if (sack_size == 0){
+                            break;
+                        }
+                    }
+                    else{
+                        index += 1;
+                    }
+                }
+            }
+            int index1 = 0;
+            int[] amounts = new int[]{red, green, blue, orange};
+            String[] colors = new String[]{"red", "green", "blue", "orange"};
+            String amount = "";
+            for (int j=0; j< amounts.length; j++){
+                int times = 0;
+                while (amounts[j] != 0){
+                    amounts[j] -= 1;
+                    times += 1;
+                }
+                amount += " " + times + " scoops of " + colors[index1] + ",";
+                index1 += 1;
+            }
+
+            System.out.println("Knapsack of capacity " + knapsack_capacities.get(i) + " is worth " + worth + " and " +
+                    "contains " + amount);
         }
-        */
         }
     }
