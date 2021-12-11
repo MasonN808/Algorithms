@@ -157,14 +157,16 @@ public class Heist implements Cloneable{
             // how many differing color spices were used
             int red = 0, green = 0, blue = 0, orange = 0;
             int index = 0;
+            int j = 0;
             while (sack_size != 0 && copy_spices[copy_spices.length-1].quantity != 0){
-                for (int j = 0; j < copy_spices.length; j++){
+                while (copy_spices[j].quantity != 0){
+//                for (int j = 0; j < copy_spices.length; j++){
                     index += 1;
-                    if(copy_spices[j].quantity != 0){
+//                    if(copy_spices[j].quantity != 0){
                         sack_size -= 1;
                         worth += copy_spices[j].unit_price;
                         copy_spices[j].quantity -= 1;
-                        System.out.println(copy_spices[1].quantity);
+//                        System.out.println(copy_spices[1].quantity);
                         switch (copy_spices[j].color) {
                             case "red" -> red += 1;
                             case "green" -> green += 1;
@@ -174,21 +176,22 @@ public class Heist implements Cloneable{
                         if (sack_size == 0){
                             break;
                         }
-                    }
+//                    }
 //                    if(index == 3){
 //                        break;
 //                    }
                 }
+                j+=1;
 
             }
             int index1 = 0;
             int[] amounts = new int[]{red, green, blue, orange};
             String[] colors = new String[]{"red", "green", "blue", "orange"};
             String amount = "";
-            for (int j=0; j< amounts.length; j++){
+            for (int p=0; p< amounts.length; p++){
                 int times = 0;
-                while (amounts[j] != 0){
-                    amounts[j] -= 1;
+                while (amounts[p] != 0){
+                    amounts[p] -= 1;
                     times += 1;
                 }
                 amount += " " + times + " scoops of " + colors[index1] + ",";
