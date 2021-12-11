@@ -61,7 +61,7 @@ public class Test {
             e.printStackTrace();
         }
 
-        String[] spice = lines.clone();
-
+        String[] spice = lines2.clone();
+        Heist.spice_heist(spice);
     }
 }
