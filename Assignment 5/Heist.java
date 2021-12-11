@@ -1,7 +1,8 @@
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class Heist {
+public class Heist implements Cloneable{
     public static void spice_heist(String[] lines) {
         // use these indices throughout for loops
         final int NUMBER_OF_SPICES = 4;
@@ -16,6 +17,7 @@ public class Heist {
         ArrayList<Integer> knapsack_capacities = new ArrayList<>();
 //        while (index_end <= lines.length) {
 //            index_start = index_end;
+        int last_index = 0;
         for (int i = index_start; i < lines.length; i++) {
             String line = lines[i];
             index_start += 1;
@@ -39,7 +41,8 @@ public class Heist {
                 String[] subwords = words[j].split("=");
                 if (subwords[0].equals("knapsackcapacity")) {
                     onKnapsack = true;
-                    knapsack_capacities.add(Integer.parseInt(subwords[1]));
+                    last_index = index_start;
+                    break;
                 }
                 if (!onKnapsack) {
                     // populate the spice attributes
@@ -57,22 +60,104 @@ public class Heist {
                 //append the Spice object in an array
                 spices[spice_index] = new_spice;
                 spice_index += 1;
+            }else{
+                break;
+            }
+        }
+
+        for (int i = last_index-1; i < lines.length; i++){
+            String line = lines[i];
+            String[] words = line.split(";");
+            // attributes for Spice object
+//            String[] spice_attributes = new String[3];
+            for (int j = 0; j < words.length; j++) {
+                words[j] = words[j].replaceAll("\\s", "");
+                // separate the words in each element of words by "="
+                String[] subwords = words[j].split("=");
+                if (subwords[0].equals("knapsackcapacity")) {
+                    knapsack_capacities.add(Integer.parseInt(subwords[1]));
+                }
+                else{
+                    System.out.println("ERROR in Heist line 82");
+                }
             }
         }
         RelativeInsertionSort_Decreasing RIS = new RelativeInsertionSort_Decreasing();
         // relatively sort unit_prices and spices
         RIS.relative_insertionSort_decreasing(unit_prices, spices);
-
+        // I don't know how to make deep clone of spices so best solution:
+//        Spice[][] copy_spices = new Spice[][]{spices.clone(), spices.clone(), spices.clone(), spices.clone(), spices.clone()};
         // start filling each knapsack and print results
+        int out_index = 0;
         for (int i=0; i < knapsack_capacities.size(); i++){
-            Spice[] copy_spices = spices.clone();
+            onKnapsack = false;
+            index_start = 0;
+            spice_index = 0;
+            Spice[] spices2 = new Spice[NUMBER_OF_SPICES];
+            // use unit_prices to sort the spices array
+            unit_prices = new float[NUMBER_OF_SPICES];
+            for (int k = index_start; k < lines.length; k++) {
+                String line = lines[k];
+                index_start += 1;
+                // case for line is blank;
+                if (line.isBlank()) {
+                    // skip the line
+                    continue;
+                }
+                // case for line is a comment
+                if (line.charAt(0) == '-' & line.charAt(1) == '-') {
+                    // skip the line
+                    continue;
+                }
+                // make an array of the words from the line separated by ";"
+                String[] words = line.split(";");
+                // attributes for Spice object
+                String[] spice_attributes = new String[3];
+                for (int j = 0; j < words.length; j++) {
+                    words[j] = words[j].replaceAll("\\s", "");
+                    // separate the words in each element of words by "="
+                    String[] subwords = words[j].split("=");
+                    if (subwords[0].equals("knapsackcapacity")) {
+                        onKnapsack = true;
+                        last_index = index_start;
+                        break;
+                    }
+                    if (!onKnapsack) {
+                        // populate the spice attributes
+                        spice_attributes[j] = subwords[1];
+                    }
+                }
+                if (!onKnapsack) {
+                    Spice new_spice = new Spice();
+                    new_spice.color = spice_attributes[0];
+                    new_spice.total_price = Float.parseFloat(spice_attributes[1]);
+                    new_spice.quantity = Integer.parseInt(spice_attributes[2]);
+                    //append the unit_price to array
+                    unit_prices[spice_index] = new_spice.total_price / new_spice.quantity;
+                    new_spice.unit_price = unit_prices[spice_index];
+                    //append the Spice object in an array
+                    spices2[spice_index] = new_spice;
+                    spice_index += 1;
+                }else{
+                    break;
+                }
+            }
+
+
+            Spice[] copy_spices = spices2.clone();
+
+            RelativeInsertionSort_Decreasing RIS2 = new RelativeInsertionSort_Decreasing();
+            // relatively sort unit_prices and spices
+            RIS2.relative_insertionSort_decreasing(unit_prices, copy_spices);
+
+
             int sack_size = knapsack_capacities.get(i);
             // how much the knapsack is worth
             float worth = 0;
             // how many differing color spices were used
             int red = 0, green = 0, blue = 0, orange = 0;
             int index = 0;
-            while (sack_size != 0 || index == 5){
+            while (sack_size != 0){
                 for (int j = 0; j < copy_spices.length; j++){
                     if(copy_spices[j].quantity != 0){
                         sack_size -= 1;
@@ -87,9 +172,6 @@ public class Heist {
                         if (sack_size == 0){
                             break;
                         }
-                    }
-                    else{
-                        index += 1;
                     }
                 }
             }
@@ -109,6 +191,25 @@ public class Heist {
 
             System.out.println("Knapsack of capacity " + knapsack_capacities.get(i) + " is worth " + worth + " and " +
                     "contains " + amount);
-        }
+            out_index += 1;
         }
     }
+
+//    public Spice[] clone() throws CloneNotSupportedException
+//    {
+//        // Assign the shallow copy to
+//        // new reference variable t
+//        Spice[] t = (Spice[]) super.clone();
+//
+//        // Creating a deep copy for c
+//        for (int i = 0; i < )
+//        t.c = new Test();
+//        t.c.x = c.x;
+//        t.c.y = c.y;
+//
+//        // Create a new object for the field c
+//        // and assign it to shallow copy obtained,
+//        // to make it a deep copy
+//        return t;
+//    }
+}
