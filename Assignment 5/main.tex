@@ -1,0 +1,676 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+% Margins
+\usepackage[a4paper, total={6in, 10in}]{geometry}
+\usepackage{listings}
+\usepackage{float}
+\lstset
+{ %Formatting for code in appendix
+    language=Matlab,
+    basicstyle=\footnotesize,
+    numbers=left,
+    stepnumber=1,
+    showstringspaces=false,
+    tabsize=1,
+    breaklines=true,
+    breakatwhitespace=false,
+}
+
+\title{Assignment 5 - Code Evaluation}
+\author{Mason Nakamura}
+\date{December 2021}
+
+
+
+
+
+\usepackage{tabularx}
+% For tabularx
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\begin{document}
+
+\maketitle
+
+\section{LinkedObjects Class}
+    \begin{lstlisting}
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+public class LinkedObjects {
+    ArrayList<Integer> num_vertices = new ArrayList<>();
+    public void linked_objects(String[] lines) {
+        // use these indices throughout for loops
+        int index_start;
+        int index_end = 0;
+        // for printing purposes
+        int graph_id = 0;
+        // for vertex starting index
+        boolean indexIs0 = false;
+        // Read the lines up to add edge case
+        while (index_end <= lines.length) {
+            graph_id += 1;
+            index_start = index_end;
+            int adj_list_length = 0;
+            // get indices for for loop for edges
+            for (int i = index_start; i < lines.length; i++) {
+                String line = lines[i];
+                index_start += 1;
+                // case for line is blank;
+                if (line.isBlank()) {
+                    // skip the line
+                    continue;
+                }
+                // case for line is a comment
+                if (line.charAt(1) == '-' & line.charAt(0) == '-') {
+                    // skip the line
+                    continue;
+                }
+                // make an array of the words from the line
+                String[] words = line.split(" ");
+                // case for declaring new graph
+                if (words[0].equals("new")) {
+                    // print graph_id
+                    System.out.println("Graph Number: " + graph_id);
+                    //skip the line
+                    continue;
+                }
+                // case for adding vertex
+                if (words[0].equals("add") & words[1].equals("vertex")) {
+                    adj_list_length += 1;
+                    if (words[2].equals("0")) {
+                        indexIs0 = true;
+                    }
+                    continue;
+                }
+                //check if hit edge case
+                if (words[0].equals("add") & words[1].equals("edge")) {
+                    // subtract an index since we previously added it but didn't need to since we entered the edge case
+                    index_start -= 1;
+                    break;
+                }
+
+            }
+
+            // create instance of array given number of vertices declared
+            index_end = index_start + 1;
+            //make array of vertex objects
+            Vertex[] array = new Vertex[adj_list_length];
+            // check starting index
+
+            // create first vertex objects in array given index
+            if (indexIs0) {
+                for (int i = 0; i < adj_list_length; i++) {
+                    // from Vertex class
+                    Vertex vertex = new Vertex();
+                    vertex.connecting_vertex = i;
+                    vertex.label = i;
+                    vertex.next = null;
+                    vertex.neighbors = new ArrayList<Vertex>();
+                    array[i] = vertex;
+                }
+
+            } else {// shift index by 1
+                for (int i = 1; i < adj_list_length + 1; i++) {
+                    Vertex vertex = new Vertex();
+                    vertex.connecting_vertex = i;
+                    vertex.label = i;
+                    vertex.next = null;
+                    vertex.neighbors = new ArrayList<Vertex>();
+                    array[i - 1] = vertex;
+                }
+            }
+
+            // use index_start to continue in the for loop
+            for (int i = index_start; i < index_end; i++) {
+                // case if reached to end of file/(array of lines)
+                if (lines.length < index_end) {
+                    break;
+                }
+                String line = lines[i];
+                String[] words = line.split(" ");
+                // check if line is blank; if so, move to next graph
+                if (line.isBlank()) {
+                    break;
+                }
+
+                // check if there are two spaces between the weight and the connecting vertex
+                // if so, move up an index
+                if (words[5].equals("")){
+                    words[5] = words[6];
+                }
+
+                // case for adding edge
+                if (words[0].equals("add") & words[1].equals("edge")) {
+                    index_end += 1;
+                    // you need to define vertex1 and vertex2 since not doing so creates a pointer infinitely pointing to itself
+                    if (indexIs0) {// if index starts at 0 don't subtract 1
+                        Vertex vertex1 = new Vertex();
+                        vertex1.origin_vertex = Integer.parseInt(words[2]);
+                        vertex1.connecting_vertex = Integer.parseInt(words[4]);
+                        vertex1.weight = Integer.parseInt(words[5]);
+                        vertex1.label = vertex1.connecting_vertex;
+                        Vertex head1 = array[vertex1.origin_vertex - 1];
+                        while (head1.next != null) {
+                            head1 = head1.next;
+                        }
+                        head1.next = vertex1;
+
+                    } else {// subtract 1 to keep indices same
+                        Vertex vertex1 = new Vertex();
+                        vertex1.origin_vertex = Integer.parseInt(words[2]);
+                        vertex1.connecting_vertex = Integer.parseInt(words[4]);
+                        vertex1.weight = Integer.parseInt(words[5]);
+                        vertex1.label = vertex1.connecting_vertex;
+                        Vertex head1 = array[vertex1.origin_vertex - 1];
+                        while (head1.next != null) {
+                            head1 = head1.next;
+                        }
+                        head1.next = vertex1;
+                    }
+                }
+            }
+
+
+            Vertex[] copy_vertexes = array.clone();
+            for(Vertex i: copy_vertexes){
+                System.out.print("[" + i.label+ "]" + " ");
+                while (i.next != null){
+                    i = i.next;
+                    System.out.print(i.connecting_vertex + "(" + i.weight + ")" + " ");
+                }
+                System.out.println();
+            }
+
+        }
+    }
+
+    // to insert row into 2-D array in
+    public int[][] insertRow(int[][] m, int r, int[] data) {
+        int[][] out = new int[m.length + 1][];
+        for (int i = 0; i < r; i++) {
+            out[i] = m[i];
+        }
+        out[r] = data;
+        for (int i = r + 1; i < out.length; i++) {
+            out[i] = m[i - 1];
+        }
+        return out;
+    }
+
+    public ArrayList<int[][]> matrices(String[] lines) {
+        // use these indices throughout for loops
+        int index_start;
+        int index_end = 0;
+        // for vertex starting index
+        boolean indexIs0 = false;
+        //initialize an arraylist of 2-arrays (matrices) so that we can pull the individual graphs in the testing file
+        ArrayList<int[][]> matrices = new ArrayList<>();
+        while (index_end <= lines.length) {
+            index_start = index_end;
+            // don't need rows and columns since adjacency matrix is symmetric ==> rows = columns
+            int vertices = 0;
+            // get indices for for loop for edges
+            for (int i = index_start; i < lines.length; i++) {
+                String line = lines[i];
+                index_start += 1;
+                // case for line is blank;
+                if (line.isBlank()) {
+                    // skip the line
+                    continue;
+                }
+                // case for line is a comment
+                if (line.charAt(1) == '-' & line.charAt(0) == '-') {
+                    // skip the line
+                    continue;
+                }
+                // make an array of the words from the line
+                String[] words = line.split(" ");
+                // case for declaring new graph
+                if (words[0].equals("new")) {
+                    //skip the line
+                    continue;
+                }
+                // case for adding vertex
+                if (words[0].equals("add") & words[1].equals("vertex")) {
+                    vertices += 1;
+                    if (words[2].equals("0")) {
+                        indexIs0 = true;
+                    }
+                    continue;
+                }
+                //check if hit edge case
+                if (words[0].equals("add") & words[1].equals("edge")) {
+                    index_start -= 1;
+                    break;
+                }
+
+            }
+            // add number of vertices to list
+            num_vertices.add(vertices);
+            // create instance of matrix
+            index_end = index_start + 1;
+            int[][] matrix = new int[0][3];
+            // use index_start to continue in the for loop
+            for (int i = index_start; i < index_end; i++) {
+                // case if reached to end of file/(array of lines)
+                if (lines.length < index_end) {
+                    break;
+                }
+                String line = lines[i];
+                String[] words = line.split(" ");
+                // check if line is blank; if so, move to next graph
+                if (line.isBlank()) {
+                    break;
+                }
+
+                // check if there are two spaces between the weight and the connecting vertex
+                // if so, move up an index
+                if (words[5].equals("")){
+                    words[5] = words[6];
+                }
+
+                // case for adding edge
+                if (words[0].equals("add") & words[1].equals("edge")) {
+                    index_end += 1;
+                    // use Integer.parseInt to convert string to int
+                    if (indexIs0) {// if index starts at 0 don't subtract 1
+                        // make array of data for added edge
+                        int[] newData = new int[]{Integer.parseInt(words[2]) + 1, Integer.parseInt(words[4]) + 1, Integer.parseInt(words[5])};
+                        // append the array to the matrix
+                        matrix = insertRow(matrix, matrix.length, newData);
+
+                    } else {// subtract 1 to keep indices same
+                        // make array of data for added edge
+                        int[] newData = new int[]{Integer.parseInt(words[2]), Integer.parseInt(words[4]), Integer.parseInt(words[5])};
+                        // append the array to the matrix
+                        matrix = insertRow(matrix, matrix.length, newData);
+                    }
+                }
+            }
+
+//            for (int i = 0; i < matrix.length; i++) {
+//                for (int j = 0; j < matrix[i].length; j++) {
+//                    System.out.print(matrix[i][j] + " ");
+//                }
+//                System.out.println();
+//            }
+//            System.out.println();
+            matrices.add(matrix);
+        }
+        return matrices;
+    }
+}
+
+\end{lstlisting}
+
+In this class I used what I did in assignment 4, except I adapted it to directed graphs (fairly easy).  I have two methods. The first being the linked\_objects method which demonstrates that I constructed a linked object representation for each graph, outputting an adjacency list for visual purposes. The next methods called matrices() on line 165 was used as input for my SSSP algorithm where it gave the algorithm matrices to find the shortest path.
+
+\section{SSSP Class}
+    \begin{lstlisting}
+import java.util.ArrayList;
+
+public class SSSP {
+    static void bellman_ford(int[][] graph, int V, int E, int src) {
+        // Initialize distance of all vertices as very big value.
+        int[] dis = new int[V];
+        for (int i = 0; i < V; i++)
+            dis[i] = Integer.MAX_VALUE;
+
+        // initialize distance of source as 0
+        dis[src-1] = 0;
+
+        // RELAX
+        for (int i = 0; i < V - 1; i++) {
+            for (int j = 0; j < E; j++) {
+                // subtract 1 if !indexis0
+                if (dis[graph[j][0]-1] != Integer.MAX_VALUE && dis[graph[j][0]-1] + graph[j][2] < dis[graph[j][1]-1]) {
+                    dis[graph[j][1]-1] = dis[graph[j][0]-1] + graph[j][2];
+                }
+            }
+        }
+        // check if there is an infinite cycle
+        for (int i = 0; i < E; i++) {
+            int x = graph[i][0];
+            int y = graph[i][1];
+            int weight = graph[i][2];
+            if (dis[x-1] != Integer.MAX_VALUE && dis[x-1] + weight < dis[y-1]) {
+                System.out.println("Graph contains negative weight cycle");
+            }
+        }
+
+        System.out.println("Vertex \t\t Distance from Source");
+        for (int i = 0; i < V; i++)
+            System.out.println(i+1 + "\t\t\t " + dis[i]);
+    }
+}
+
+    \end{lstlisting}
+    The SSSP Class implements the BellmanFord Algorithm to find the shortest path on a directed weighted graph.  In this case, we used adjacency matrices to find the shortest paths.  We first initialize all the distances for each node in the graph as infinity (MAX\_VALUE) at line 7.  Then we apply a relax function on all the nodes in the graph and every edge in the graph checking for smallest distance relative to all other combinations of nodes and edges.  Then on line 23, we check if the algorithm gets stuck in an infinite cycle.  The complexity is $O(|V||E|)$ since we go through every edge on every vertex (the nested for loop in line 14).
+
+
+\newpage
+\section{Heist Class}
+    \begin{lstlisting}
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Heist implements Cloneable{
+    public static void spice_heist(String[] lines) {
+        // use these indices throughout for loops
+        final int NUMBER_OF_SPICES = 4;
+        final int NUMBER_OF_KNAPSACKS = 5;
+        int index_start = 0;
+        int index_end = 0;
+        int spice_index = 0;
+        boolean onKnapsack = false;
+        Spice[] spices = new Spice[NUMBER_OF_SPICES];
+        // use unit_prices to sort the spices array
+        float[] unit_prices = new float[NUMBER_OF_SPICES];
+        ArrayList<Integer> knapsack_capacities = new ArrayList<>();
+//        while (index_end <= lines.length) {
+//            index_start = index_end;
+        int last_index = 0;
+        for (int i = index_start; i < lines.length; i++) {
+            String line = lines[i];
+            index_start += 1;
+            // case for line is blank;
+            if (line.isBlank()) {
+                // skip the line
+                continue;
+            }
+            // case for line is a comment
+            if (line.charAt(0) == '-' & line.charAt(1) == '-') {
+                // skip the line
+                continue;
+            }
+            // make an array of the words from the line separated by ";"
+            String[] words = line.split(";");
+            // attributes for Spice object
+            String[] spice_attributes = new String[3];
+            for (int j = 0; j < words.length; j++) {
+                words[j] = words[j].replaceAll("\\s", "");
+                // separate the words in each element of words by "="
+                String[] subwords = words[j].split("=");
+                if (subwords[0].equals("knapsackcapacity")) {
+                    onKnapsack = true;
+                    last_index = index_start;
+                    break;
+                }
+                if (!onKnapsack) {
+                    // populate the spice attributes
+                    spice_attributes[j] = subwords[1];
+                }
+            }
+            if (!onKnapsack) {
+                Spice new_spice = new Spice();
+                new_spice.color = spice_attributes[0];
+                new_spice.total_price = Float.parseFloat(spice_attributes[1]);
+                new_spice.quantity = Integer.parseInt(spice_attributes[2]);
+                //append the unit_price to array
+                unit_prices[spice_index] = new_spice.total_price / new_spice.quantity;
+                new_spice.unit_price = unit_prices[spice_index];
+                //append the Spice object in an array
+                spices[spice_index] = new_spice;
+                spice_index += 1;
+            }else{
+                break;
+            }
+        }
+
+        for (int i = last_index-1; i < lines.length; i++){
+            String line = lines[i];
+            String[] words = line.split(";");
+            // attributes for Spice object
+//            String[] spice_attributes = new String[3];
+            for (int j = 0; j < words.length; j++) {
+                words[j] = words[j].replaceAll("\\s", "");
+                // separate the words in each element of words by "="
+                String[] subwords = words[j].split("=");
+                if (subwords[0].equals("knapsackcapacity")) {
+                    knapsack_capacities.add(Integer.parseInt(subwords[1]));
+                }
+                else{
+                    System.out.println("ERROR in Heist line 82");
+                }
+            }
+        }
+        RelativeInsertionSort_Decreasing RIS = new RelativeInsertionSort_Decreasing();
+        // relatively sort unit_prices and spices
+        RIS.relative_insertionSort_decreasing(unit_prices, spices);
+        // start filling each knapsack and print results
+        int out_index = 0;
+        for (int i=0; i < knapsack_capacities.size(); i++){
+            onKnapsack = false;
+            index_start = 0;
+            spice_index = 0;
+            Spice[] spices2 = new Spice[NUMBER_OF_SPICES];
+            // use unit_prices to sort the spices array
+            unit_prices = new float[NUMBER_OF_SPICES];
+            for (int k = index_start; k < lines.length; k++) {
+                String line = lines[k];
+                index_start += 1;
+                // case for line is blank;
+                if (line.isBlank()) {
+                    // skip the line
+                    continue;
+                }
+                // case for line is a comment
+                if (line.charAt(0) == '-' & line.charAt(1) == '-') {
+                    // skip the line
+                    continue;
+                }
+                // make an array of the words from the line separated by ";"
+                String[] words = line.split(";");
+                // attributes for Spice object
+                String[] spice_attributes = new String[3];
+                for (int j = 0; j < words.length; j++) {
+                    words[j] = words[j].replaceAll("\\s", "");
+                    // separate the words in each element of words by "="
+                    String[] subwords = words[j].split("=");
+                    if (subwords[0].equals("knapsackcapacity")) {
+                        onKnapsack = true;
+                        last_index = index_start;
+                        break;
+                    }
+                    if (!onKnapsack) {
+                        // populate the spice attributes
+                        spice_attributes[j] = subwords[1];
+                    }
+                }
+                if (!onKnapsack) {
+                    Spice new_spice = new Spice();
+                    new_spice.color = spice_attributes[0];
+                    new_spice.total_price = Float.parseFloat(spice_attributes[1]);
+                    new_spice.quantity = Integer.parseInt(spice_attributes[2]);
+                    //append the unit_price to array
+                    unit_prices[spice_index] = new_spice.total_price / new_spice.quantity;
+                    new_spice.unit_price = unit_prices[spice_index];
+                    //append the Spice object in an array
+                    spices2[spice_index] = new_spice;
+                    spice_index += 1;
+                }else{
+                    break;
+                }
+            }
+
+
+            Spice[] copy_spices = spices2.clone();
+
+            RelativeInsertionSort_Decreasing RIS2 = new RelativeInsertionSort_Decreasing();
+            // relatively sort unit_prices and spices
+            RIS2.relative_insertionSort_decreasing(unit_prices, copy_spices);
+
+
+            int sack_size = knapsack_capacities.get(i);
+            // how much the knapsack is worth
+            float worth = 0;
+            // how many differing color spices were used
+            int red = 0, green = 0, blue = 0, orange = 0;
+            int index = 0;
+            int j = 0;
+            while (sack_size != 0 && copy_spices[copy_spices.length-1].quantity != 0){
+                while (copy_spices[j].quantity != 0){
+//                for (int j = 0; j < copy_spices.length; j++){
+                    index += 1;
+//                    if(copy_spices[j].quantity != 0){
+                        sack_size -= 1;
+                        worth += copy_spices[j].unit_price;
+                        copy_spices[j].quantity -= 1;
+//                        System.out.println(copy_spices[1].quantity);
+                        switch (copy_spices[j].color) {
+                            case "red" -> red += 1;
+                            case "green" -> green += 1;
+                            case "blue" -> blue += 1;
+                            case "orange" -> orange += 1;
+                        }
+                        if (sack_size == 0){
+                            break;
+                        }
+//                    }
+//                    if(index == 3){
+//                        break;
+//                    }
+                }
+                j+=1;
+
+            }
+            int index1 = 0;
+            int[] amounts = new int[]{red, green, blue, orange};
+            String[] colors = new String[]{"red", "green", "blue", "orange"};
+            String amount = "";
+            for (int p=0; p< amounts.length; p++){
+                int times = 0;
+                while (amounts[p] != 0){
+                    amounts[p] -= 1;
+                    times += 1;
+                }
+                amount += " " + times + " scoops of " + colors[index1] + ",";
+                index1 += 1;
+            }
+
+            System.out.println("Knapsack of capacity " + knapsack_capacities.get(i) + " is worth " + worth + " and " +
+                    "contains " + amount);
+            out_index += 1;
+        }
+    }
+
+
+}
+
+    \end{lstlisting}
+    The Heist class has the spice\_heist() method used to solve the Knapsack problem.  We first parse the spice file from line 21 to line 84 where we populated several arrays to help in our outputs later on.  On line 85, we implemented a relative sorting algorithm to sort two arrays the same order. In this case, we sorted unit\_prices and spices in decreasing order. Next we go through each knapsack in line 90 using the same parsing method from lines 21-84 since I was unable to deep clone the array of Spice objects and there associated attributes.  On line 159,  I then applied a greedy algorithm. The complexity is $O(nlogn)$ since it takes $logn$ for each item and there is a total of $n$ items. Additionally, the $nlogn$ derives from the greedy choice part of the algorithm which is in the while loop.
+    
+\newpage
+    
+\section{RelativeInsertionSort Class}
+    \begin{lstlisting}
+public class RelativeInsertionSort_Decreasing {
+    public void relative_insertionSort_decreasing(float[] A, Spice[] B){
+        int n = A.length;
+        for(int i = 1; i < n; i++){
+            float key = A[i];
+            Spice keyB = B[i];
+            int j = i-1;
+//            comparisons += 1;
+            // if A[j] does not need to be switched, skip while
+            while(j >= 0 && A[j] < key){
+                A[j+1] = A[j];
+                B[j+1] = B[j];
+                j = j-1;
+            }
+            A[j+1] = key;
+            B[j+1] = keyB;
+        }
+    }
+}
+
+    \end{lstlisting}
+    Used in SSSP Class
+    
+    \section{Spice Class}
+    \begin{lstlisting}
+public class Spice {
+    String color = null;
+    float total_price = -1;
+    int quantity = -1;
+    float unit_price = -1;
+}
+    \end{lstlisting}
+    Used in Heist Class
+    
+\section{Testing Class}
+\begin{lstlisting}
+
+    import java.io.*;
+import java.util.Arrays;
+
+public class Test {
+
+
+
+    public static void main(String[] args) {
+        String[] lines = {};
+        // Read line by line the txt file using File reader
+        String fileName = "graphs2";  //REMEMBER TO NOT HARDCODE
+        File file = new File(fileName);
+        try {
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            while ((line = br.readLine()) != null) {
+                // add strings from txt file line by line into array words
+                lines = Arrays.copyOf(lines, lines.length + 1); //extends memory
+                lines[lines.length - 1] = line; //adds line to extra memory
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String[] copy_graphs0 = lines.clone();
+
+        // 1)
+        LinkedObjects out = new LinkedObjects();
+        // outputs matrices
+        System.out.println("GRAPH AS LINKED OBJECTS TESTING: ");
+        out.linked_objects(copy_graphs0);
+        int j = 0;
+        for (int[][] i: out.matrices(copy_graphs0)){
+            // i.length = |E|, out.num_vertices.get(j) = |V|, i = matrix, 1 = node source
+            SSSP.bellman_ford(i, out.num_vertices.get(j), i.length, 1);
+            j+=1;
+        }
+
+        // 2) Knapsacks
+        String[] lines2 = {};
+        // Read line by line the txt file using File reader
+        String fileName2 = "spice";  //REMEMBER TO NOT HARDCODE
+        File file2 = new File(fileName2);
+        try {
+            FileReader fr = new FileReader(file2);
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            while ((line = br.readLine()) != null) {
+                // add strings from txt file line by line into array words
+                lines2 = Arrays.copyOf(lines2, lines2.length + 1); //extends memory
+                lines2[lines2.length - 1] = line; //adds line to extra memory
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String[] spice = lines2.clone();
+        Heist.spice_heist(spice);
+    }
+}
+\end{lstlisting}
+Where I read the .txt files and did the testing.
+\end{document}
+
+
