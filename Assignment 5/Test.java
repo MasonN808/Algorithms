@@ -8,7 +8,7 @@ public class Test {
     public static void main(String[] args) {
         String[] lines = {};
         // Read line by line the txt file using File reader
-        String fileName = "Assignment 5/graphs2";  //REMEMBER TO NOT HARDCODE
+        String fileName = "graphs2";  //REMEMBER TO NOT HARDCODE
         File file = new File(fileName);
         try {
             FileReader fr = new FileReader(file);
@@ -55,7 +55,7 @@ public class Test {
         // 2) Knapsacks
         String[] lines2 = {};
         // Read line by line the txt file using File reader
-        String fileName2 = "Assignment 5/spice";  //REMEMBER TO NOT HARDCODE
+        String fileName2 = "spice";  //REMEMBER TO NOT HARDCODE
         File file2 = new File(fileName2);
         try {
             FileReader fr = new FileReader(file2);
