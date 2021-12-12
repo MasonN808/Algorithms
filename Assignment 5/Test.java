@@ -8,7 +8,7 @@ public class Test {
     public static void main(String[] args) {
         String[] lines = {};
         // Read line by line the txt file using File reader
-        String fileName = "graphs2";  //REMEMBER TO NOT HARDCODE
+        String fileName = "Assignment 5/graphs2";  //REMEMBER TO NOT HARDCODE
         File file = new File(fileName);
         try {
             FileReader fr = new FileReader(file);
@@ -37,6 +37,17 @@ public class Test {
         for (int[][] i: out.matrices(copy_graphs0)){
             // i.length = |E|, out.num_vertices.get(j) = |V|, i = matrix, 1 = node source
             System.out.println("Graph Number: " + (j+1));
+            // sort the source nodes in the matrix
+            int[] src_nodes = new int[i.length];
+            for (int k = 0; k < src_nodes.length; k++){
+                src_nodes[k] = i[k][0];
+            }
+
+            // sort the matrix relatively to the source nodes
+            RelativeInsertionSort_Decreasing RIS = new RelativeInsertionSort_Decreasing();
+            // relatively sort unit_prices and spices
+            RIS.relative_insertionSort_increasing(src_nodes, i);
+
             SSSP.bellman_ford(i, out.num_vertices.get(j), i.length, 1);
             j+=1;
         }
@@ -44,7 +55,7 @@ public class Test {
         // 2) Knapsacks
         String[] lines2 = {};
         // Read line by line the txt file using File reader
-        String fileName2 = "spice";  //REMEMBER TO NOT HARDCODE
+        String fileName2 = "Assignment 5/spice";  //REMEMBER TO NOT HARDCODE
         File file2 = new File(fileName2);
         try {
             FileReader fr = new FileReader(file2);

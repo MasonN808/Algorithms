@@ -254,13 +254,13 @@ public class LinkedObjects {
                 }
             }
 
-            for (int i = 0; i < matrix.length; i++) {
-                for (int j = 0; j < matrix[i].length; j++) {
-                    System.out.print(matrix[i][j] + " ");
-                }
-                System.out.println();
-            }
-            System.out.println();
+//            for (int i = 0; i < matrix.length; i++) {
+//                for (int j = 0; j < matrix[i].length; j++) {
+//                    System.out.print(matrix[i][j] + " ");
+//                }
+//                System.out.println();
+//            }
+//            System.out.println();
             matrices.add(matrix);
         }
         return matrices;
