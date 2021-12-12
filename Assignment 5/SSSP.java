@@ -5,13 +5,13 @@ public class SSSP {
         // Initialize distance of all vertices as very big value.
         // get list of paths for output
         String[] paths = new String[V];
-//        StringBuilder path = new StringBuilder();
-//        path.append(src);
         int[] dis = new int[V];
-        int[] predecessor = new int[V];
+        Predecessor[] predecessor = new Predecessor[V];
         for (int i = 0; i < V; i++) {
+            Predecessor predecessor1 = new Predecessor();
+            predecessor1.value = -1;
             dis[i] = Integer.MAX_VALUE;
-            predecessor[i] = -1;
+            predecessor[i] = predecessor1;
         }
 
         // initialize distance of source as 0
@@ -19,21 +19,34 @@ public class SSSP {
 
         // RELAX
         for (int i = 0; i < V; i++) {
+//            ArrayList<Predecessor> predecessors = new ArrayList<>();
             for (int j = 0; j < E; j++) {
                 // subtract 1 if !indexis0
                 if (dis[graph[j][0]-1] != Integer.MAX_VALUE && dis[graph[j][0]-1] + graph[j][2] < dis[graph[j][1]-1]) {
                     dis[graph[j][1]-1] = dis[graph[j][0]-1] + graph[j][2];
                     // keep track of path
-                    predecessor[graph[j][1]-1] = graph[j][0]-1;
-//                    System.out.println(graph[j][1]-1);
+                    if (predecessor[graph[j][1]-1].value != -1){
+                        Predecessor new_predecessor = new Predecessor();
+                        new_predecessor.value = graph[j][0];
+                        predecessor[graph[j][1]-1].next = new_predecessor;
+                    }
+                    else{
+                        predecessor[graph[j][1]-1].value = graph[j][0];
+                    }
                 }
             }
-//            System.out.println("--------");
+
             String path = Integer.toString(src);
-            int v = predecessor[i];
+            int v = predecessor[i].value;
             while (v != -1){
                 path += " -> " + (v+1);
-                v = predecessor[v];
+                if (predecessor[i].next != null){
+                    predecessor[i] = predecessor[i].next;
+                    v = predecessor[i].value;
+                }
+                else{
+                    break;
+                }
             }
 //            for (int k: predecessor){
 //                System.out.println(k);
