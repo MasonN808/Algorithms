@@ -94,24 +94,36 @@ public class Testing_Protocol {
             start_index = end_index;
             end_index = group_size*loops;
         }
-        // Find the expected values for the number of tests needed in pooled testing
+        // Find the expected percentage of occurrences
         double case1 = Math.pow(1-infection_rate,group_size);
-        double case2 = Math.pow(infection_rate,2);
-        double case3 = 1-case1-case2;
+        double case3 = Math.pow(infection_rate,2);
+        double case2 = 1-case1-case3;
+
+        // Find the expected number of tests needed in pooled testing
+        int test1 = (int)Math.ceil(num_groups * case1);
+        int test2 = (int)Math.ceil(num_groups * case2) * 7;
+        int test3 = (int)Math.ceil(num_groups * case3) * 11;
+
         // For printing a certain number of decimals
         DecimalFormat numberFormat = new DecimalFormat("#.00000");
         System.out.println("Case 1");
         System.out.println("Expected Percentage of Total Occurrences: " + numberFormat.format(case1));
-        // take ceiling to err on the side of caution
-        System.out.println("Expected Number of Tests: " + Math.ceil(num_groups * case1));
+        // take ceiling to err on the side of caution and convert from double to integer
+        System.out.println("Expected Number of Tests: " + test1);
 
         System.out.println("------------");
         System.out.println("Case 2");
         System.out.println("Expected Number of Occurrences: " + numberFormat.format(case2));
+        System.out.println("Expected Number of Tests: " + test2);
+
         System.out.println("------------");
         System.out.println("Case 3");
         System.out.println("Expected Number of Occurrences: " + numberFormat.format(case3));
+        System.out.println("Expected Number of Tests: " + test3);
+
         System.out.println("------------");
+        System.out.println("Total Expected Number of Tests: " + (test1 + test2 + test3));
+
 
 
 
