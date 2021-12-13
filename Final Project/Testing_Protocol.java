@@ -1,3 +1,5 @@
+import java.text.DecimalFormat;
+
 public class Testing_Protocol {
 
     // number of tests needed
@@ -10,6 +12,8 @@ public class Testing_Protocol {
      * @param infection_rate The rate at which the population is being infected
      */
     public void pooled(int people, int group_size, double infection_rate){
+        // Define number of groups
+        double num_groups = people/group_size;
         // Initialize an array of length "people"
         // All values in "infected" are set to false by default
         boolean[] infected = new boolean[people];
@@ -23,6 +27,11 @@ public class Testing_Protocol {
         // Knuth shuffle array, infected
         Shuffle shuffle = new Shuffle();
         shuffle.shuffle(infected);
+//        for (boolean i: infected){
+//            if(i){
+//                System.out.print(1);
+//            }else System.out.print(0);
+//        }
         // Check the pools for infected of size "group_size"
         // if pool has infected, split pool in two and test if each pool has infected
         // then do individual test for each two pools that has infected
@@ -57,6 +66,8 @@ public class Testing_Protocol {
                                     total_tests += 1;
                                 }
                             }
+                            // break out of outer for loop to stop linear search, since the pool has already been tested on
+                            break;
                         }
                     }
                     // test second half of test pool
@@ -70,14 +81,39 @@ public class Testing_Protocol {
                                     total_tests += 1;
                                 }
                             }
+                            // break out of outer for loop to stop linear search, since the pool has already been tested on
+                            break;
                         }
                     }
+                    // break out of outer for loop to stop linear search, since the pool has already been tested on
+                    break;
                 }
 
             }
+            // move to next pool
             start_index = end_index;
-            end_index = end_index*loops;
+            end_index = group_size*loops;
         }
+        // Find the expected values for the number of tests needed in pooled testing
+        double case1 = Math.pow(1-infection_rate,group_size);
+        double case2 = Math.pow(infection_rate,2);
+        double case3 = 1-case1-case2;
+        // For printing a certain number of decimals
+        DecimalFormat numberFormat = new DecimalFormat("#.00000");
+        System.out.println("Case 1");
+        System.out.println("Expected Percentage of Total Occurrences: " + numberFormat.format(case1));
+        // take ceiling to err on the side of caution
+        System.out.println("Expected Number of Tests: " + Math.ceil(num_groups * case1));
+
+        System.out.println("------------");
+        System.out.println("Case 2");
+        System.out.println("Expected Number of Occurrences: " + numberFormat.format(case2));
+        System.out.println("------------");
+        System.out.println("Case 3");
+        System.out.println("Expected Number of Occurrences: " + numberFormat.format(case3));
+        System.out.println("------------");
+
+
 
 
 
