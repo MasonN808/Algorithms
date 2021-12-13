@@ -18,9 +18,9 @@ public class Testing_Protocol {
      * @param people The number of people to be tested
      * @param group_size The group size for initial pooled test
      * @param infection_rate The rate at which the population is being infected
-     * @param show_expected Prints the expected number of occurrences of each case and number of tests
+     * @param print_expected Prints the expected number of occurrences of each case and number of tests
      */
-    public void pooled(int people, int group_size, double infection_rate, boolean show_expected){
+    public void pooled(int people, int group_size, double infection_rate, boolean print_expected){
         // Define number of groups
         double num_groups = (double)people/group_size;
         boolean isdivisible = people % group_size == 0;
@@ -58,7 +58,6 @@ public class Testing_Protocol {
 //        infected[8] = true;
 //        infected[12] = true;
 
-        //TODO take into account that the last pooled group is not of length group_size
         while(start_index < people){
             loops += 1;
             // test the whole pool
@@ -67,19 +66,21 @@ public class Testing_Protocol {
             for (int i = start_index; i < end_index; i++) {
                 // if someone is infected, then split pool in two
                 if (infected[i]) {
-                    //TODO make sure half_end_index takes into account odd test size (not needed for this project)
-                    //add 1 to end_index to convert from type index to type size, then delete 1 to convert to type index
-                    int half_end_index = end_index - group_size / 2;
-                    // test first half of test pool
+                    // Subtract half of group_size from end_index to get get an about halved value between start and end index
+                    // Use the ceiling method to take into account case when group_size is odd
+                    // Need the (int) and (double) to make it compatible with ceiling method
+                    // TODO: TEST that the method below works as intended
+                    int half_end_index = (int) Math.ceil(end_index - (double)group_size/2);
+                    // Test first half of test pool
                     total_tests += 1;
                     for (int j = start_index; j < half_end_index; j++) {
-                        // test if someone is infected in half pool size
+                        // Test if someone is infected in half pool size
                         if (infected[j]) {
 //                            //TESTING
 //                            System.out.print("["+ start_index + "," + half_end_index+ "] " );
 //                            //TESTING
 //                            System.out.print("FIRST HALF: ");
-                            // test everyone in the half pool size
+                            // Test everyone in the half pool size
                             for (int k = start_index; k < half_end_index; k++) {
                                 total_tests += 1;
 //                                //TESTING
@@ -128,7 +129,7 @@ public class Testing_Protocol {
             }
         }
 
-        if (show_expected) {
+        if (print_expected) {
             // Find the expected percentage of occurrences
             double case1 = Math.pow(1 - infection_rate, group_size);
             double case3 = Math.pow(infection_rate, 2);
