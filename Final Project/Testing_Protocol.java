@@ -4,6 +4,7 @@ public class Testing_Protocol {
 
     // number of tests needed
     int total_tests = 0;
+    int case_tests = 0;
 
     /**
      * Gets the first and last name of this Student.
@@ -54,20 +55,18 @@ public class Testing_Protocol {
                 if(infected[i]){
                     //TODO make sure half_end_index takes into account odd test size (not needed for this project)
                     //add 1 to end_index to convert from type index to type size, then delete 1 to convert to type index
-                    int half_end_index = (end_index + 1)/2 - 1;
+                    int half_end_index = end_index-group_size/2;
+//                    System.out.println(start_index + ":" + half_end_index + ":" + end_index);
                     // test first half of test pool
                     total_tests += 1;
                     for(int j = start_index; j < half_end_index; j++){
                         // if someone is infected, then test everyone in the half pool size
                         if(infected[j]){
+                            // test everyone in the half pool size
                             for(int k = start_index; k < half_end_index; k++){
-                                // if someone is infected, then test everyone in the half pool size
-                                if(infected[k]){
-                                    total_tests += 1;
-                                }
+                                total_tests += 1;
+                                case_tests += 1;
                             }
-                            // break out of outer for loop to stop linear search, since the pool has already been tested on
-                            break;
                         }
                     }
                     // test second half of test pool
@@ -75,14 +74,11 @@ public class Testing_Protocol {
                     for(int j = half_end_index + 1; j < end_index; j++){
                         // if someone is infected, then test everyone in the half pool size
                         if(infected[j]){
+                            // test everyone in the half pool size
                             for(int k = half_end_index + 1; k < half_end_index; k++){
-                                // if someone is infected, then test everyone in the half pool size
-                                if(infected[k]){
-                                    total_tests += 1;
-                                }
+                                total_tests += 1;
+                                case_tests += 1;
                             }
-                            // break out of outer for loop to stop linear search, since the pool has already been tested on
-                            break;
                         }
                     }
                     // break out of outer for loop to stop linear search, since the pool has already been tested on
