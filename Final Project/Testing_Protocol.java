@@ -4,14 +4,6 @@ public class Testing_Protocol {
 
     // number of tests needed
     int total_tests = 0;
-//    int case1_tests = 0;
-//    int case2_tests = 0;
-//    int case3_tests = 0;
-//    int case1 = 0;
-//    int case2 = 0;
-//    int case3 = 0;
-
-
 
     /**
      * Gets the first and last name of this Student.
